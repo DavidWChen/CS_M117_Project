@@ -13,7 +13,8 @@ import CoreLocation
 
 class homePageViewController: UIViewController,CLLocationManagerDelegate {
 
-    var userEmail : String?
+    //var userEmail : String?
+    var thisUser: GIDGoogleUser?
     @IBOutlet weak var userName: UIButton!
     @IBOutlet weak var Map: MKMapView!
     
@@ -45,16 +46,36 @@ class homePageViewController: UIViewController,CLLocationManagerDelegate {
         // Do any additional setup after loading the view.
         print("Loaded home view")
         
-        userName.setTitle(userEmail,for: .normal)
+        //userName.setTitle(userEmail,for: .normal)
         
         manager.delegate = self
         manager.desiredAccuracy = kCLLocationAccuracyBest
         manager.requestWhenInUseAuthorization()
         manager.startUpdatingLocation()
         
+        if thisUser != nil {
+            userName.setTitle(thisUser?.profile.name, for: .normal)
+        }
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
         
-//        var myLocation = CLLocationCoordinate2DMake(<#T##latitude: CLLocationDegrees##CLLocationDegrees#>, <#T##longitude: CLLocationDegrees##CLLocationDegrees#>)
+        if thisUser == nil {
+            self.performSegue(withIdentifier: "ToLogin", sender: self)
+        }
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        // Create a new variable to store the instance of PlayerTableViewController
         
+        if let destination = segue.destination as? searchPageViewController {
+            destination.thisUser = thisUser
+        } else if let destination = segue.destination as? myProfileViewController {
+            destination.thisUser = thisUser
+        } else if let destination = segue.destination as? friendsListViewController {
+            destination.thisUser = thisUser
+        }
     }
 
     override func didReceiveMemoryWarning() {

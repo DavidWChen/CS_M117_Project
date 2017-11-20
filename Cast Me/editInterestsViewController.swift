@@ -9,11 +9,21 @@
 import UIKit
 
 class editInterestsViewController: UIViewController {
+    
+    var thisUser: GIDGoogleUser?
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        // Create a new variable to store the instance of PlayerTableViewController
+        
+        if let destination = segue.destination as? myProfileViewController {
+            destination.thisUser = thisUser
+        }
     }
 
     override func didReceiveMemoryWarning() {

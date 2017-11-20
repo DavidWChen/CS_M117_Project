@@ -9,11 +9,23 @@
 import UIKit
 
 class friendsListViewController: UIViewController {
+    
+    var thisUser: GIDGoogleUser?
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        // Create a new variable to store the instance of PlayerTableViewController
+        
+        if let destination = segue.destination as? generalProfileViewController {
+            destination.thisUser = thisUser
+        } else if let destination = segue.destination as? searchPageViewController {
+            destination.thisUser = thisUser
+        }
     }
 
     override func didReceiveMemoryWarning() {
