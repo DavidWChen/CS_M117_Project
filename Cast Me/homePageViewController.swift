@@ -25,6 +25,14 @@ class homePageViewController: UIViewController {
         }
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        if thisUser == nil {
+            self.performSegue(withIdentifier: "ToLogin", sender: self)
+        }
+    }
+    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         // Create a new variable to store the instance of PlayerTableViewController
         
