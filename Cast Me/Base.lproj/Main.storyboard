@@ -88,6 +88,11 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="Google O/Auth"/>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="HcG-Qb-f2V">
+                                <rect key="frame" x="148" y="185" width="78" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Sign In PLS"/>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
@@ -101,6 +106,7 @@
                         <outlet property="nameText" destination="qxW-GU-JWl" id="OXn-7u-v67"/>
                         <outlet property="password" destination="hlF-jj-LSO" id="meG-YP-FD1"/>
                         <outlet property="passwordText" destination="FKU-hY-qUa" id="GsJ-fj-luz"/>
+                        <outlet property="signInButton" destination="HcG-Qb-f2V" id="njU-Uf-Lv6"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
@@ -440,6 +446,6 @@
         <segue reference="qGl-Ga-etm"/>
         <segue reference="WOb-am-AeG"/>
         <segue reference="n1n-bf-QVI"/>
-        <segue reference="oRz-0I-VxO"/>
+        <segue reference="miJ-ns-Ou0"/>
     </inferredMetricsTieBreakers>
 </document>
