@@ -80,18 +80,8 @@
                                 <state key="normal" title="Next"/>
                                 <connections>
                                     <action selector="nextButtonHome:" destination="BYZ-38-t0r" eventType="touchUpInside" id="KY9-IK-2Zg"/>
-                                    <segue destination="9tW-k2-8ce" kind="show" id="miJ-ns-Ou0"/>
+                                    <segue destination="9tW-k2-8ce" kind="show" identifier="ToHome" id="miJ-ns-Ou0"/>
                                 </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="slK-zJ-Vkd">
-                                <rect key="frame" x="137" y="230" width="100" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="Google O/Auth"/>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="HcG-Qb-f2V">
-                                <rect key="frame" x="148" y="185" width="78" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="Sign In PLS"/>
                             </button>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -104,9 +94,9 @@
                         <outlet property="email" destination="lgF-3P-eRz" id="s65-ij-6aa"/>
                         <outlet property="emailText" destination="Rcw-Ff-lB1" id="Z5c-Q3-OYy"/>
                         <outlet property="nameText" destination="qxW-GU-JWl" id="OXn-7u-v67"/>
+                        <outlet property="nextButton" destination="MVu-ba-HwM" id="G7Q-Lg-KTY"/>
                         <outlet property="password" destination="hlF-jj-LSO" id="meG-YP-FD1"/>
                         <outlet property="passwordText" destination="FKU-hY-qUa" id="GsJ-fj-luz"/>
-                        <outlet property="signInButton" destination="HcG-Qb-f2V" id="njU-Uf-Lv6"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
@@ -161,19 +151,11 @@
         <!--Home-->
         <scene sceneID="AKV-B7-kvG">
             <objects>
-                <viewController title="Home" id="9tW-k2-8ce" sceneMemberID="viewController">
+                <viewController title="Home" id="9tW-k2-8ce" customClass="HomeViewController" customModule="Cast_Me" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Ghc-Op-c99">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fbA-VZ-Lgd">
-                                <rect key="frame" x="16" y="20" width="73" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="UserName"/>
-                                <connections>
-                                    <segue destination="ncY-N9-dEN" kind="show" id="jUb-d4-fzi"/>
-                                </connections>
-                            </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Lk3-ZY-WTv">
                                 <rect key="frame" x="146" y="596" width="83" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -198,14 +180,25 @@
                                     <segue destination="v5D-TZ-gJn" kind="show" id="dyX-rc-KCv"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fbA-VZ-Lgd">
+                                <rect key="frame" x="16" y="20" width="128" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="UserName"/>
+                                <connections>
+                                    <segue destination="ncY-N9-dEN" kind="show" id="jUb-d4-fzi"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <viewLayoutGuide key="safeArea" id="f3M-Fh-ic7"/>
                     </view>
+                    <connections>
+                        <outlet property="Username" destination="fbA-VZ-Lgd" id="B1b-Wa-YtX"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="8Ie-SG-snz" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="972" y="134"/>
+            <point key="canvasLocation" x="972" y="133.5832083958021"/>
         </scene>
         <!--myProfile-->
         <scene sceneID="OBH-mL-3cm">
@@ -442,10 +435,10 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="SC4-8n-4vs"/>
-        <segue reference="qGl-Ga-etm"/>
-        <segue reference="WOb-am-AeG"/>
-        <segue reference="n1n-bf-QVI"/>
+        <segue reference="1fZ-tA-e3h"/>
+        <segue reference="dyX-rc-KCv"/>
+        <segue reference="FMw-fr-7y8"/>
+        <segue reference="jUb-d4-fzi"/>
         <segue reference="miJ-ns-Ou0"/>
     </inferredMetricsTieBreakers>
 </document>

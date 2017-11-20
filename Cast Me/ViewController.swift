@@ -20,11 +20,10 @@ class ViewController: UIViewController, GIDSignInDelegate, GIDSignInUIDelegate {
     @IBOutlet weak var emailText: UITextField!
     @IBOutlet weak var passwordText: UITextField!
     @IBOutlet weak var confirmText: UITextField!
-    
-    @IBOutlet weak var signInButton: GIDSignInButton!
+    @IBOutlet weak var nextButton: UIButton!
     
     //label to display name of logged in user
-    @IBOutlet weak var labelUserEmail: UILabel!
+    var labelUserEmail = ""
     
     
     override func viewDidLoad() {
@@ -50,10 +49,10 @@ class ViewController: UIViewController, GIDSignInDelegate, GIDSignInUIDelegate {
         //getting the signin button and adding it to view
         let googleSignInButton = GIDSignInButton()
         //googleSignInButton.center = view.center
-        googleSignInButton.frame.origin = CGPoint(x: view.center.x, y: view.center.y - 200)
+        googleSignInButton.frame.origin = CGPoint(x: view.center.x, y: view.center.y - 150)
         view.addSubview(googleSignInButton)
         
-        if labelUserEmail == nil {
+        if labelUserEmail == "" {
             GIDSignIn.sharedInstance().signOut()
         }
         
@@ -74,9 +73,31 @@ class ViewController: UIViewController, GIDSignInDelegate, GIDSignInUIDelegate {
         
         //if success display the email on label
         //labelUserEmail.text = user.profile.email
-        Name.text = user.profile.email
+        labelUserEmail = user.profile.name
+        print("Sign in successful")
+        
+        //self.performSegue(withIdentifier: "ToHome", sender: self)
+        /*let homeViewController = HomeViewController() //change this to your view controller class that you want to present
+        self.present(homeViewController, animated: true, completion: nil)*/
+        
+        //self.nextButton.sendActions(for: .touchUpInside)
+        
+        return
     }
-
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        if labelUserEmail != "" {
+            self.performSegue(withIdentifier: "ToHome", sender: self)
+        }
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        // Create a new variable to store the instance of PlayerTableViewController
+        let destinationVC = segue.destination as! HomeViewController
+        destinationVC.userEmail = labelUserEmail
+    }
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
