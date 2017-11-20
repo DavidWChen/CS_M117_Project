@@ -7,11 +7,37 @@
 //
 
 import UIKit
+import MapKit
+import CoreLocation
 
-class homePageViewController: UIViewController {
+
+class homePageViewController: UIViewController,CLLocationManagerDelegate {
 
     var userEmail : String?
     @IBOutlet weak var userName: UIButton!
+    @IBOutlet weak var Map: MKMapView!
+    
+    let manager = CLLocationManager()
+    
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation])
+    {
+        let location = locations[0]
+        let span:MKCoordinateSpan = MKCoordinateSpanMake(0.01, 0.01)
+        
+        let myLocation:CLLocationCoordinate2D = CLLocationCoordinate2DMake(location.coordinate.latitude, location.coordinate.longitude)
+        
+        let region:MKCoordinateRegion = MKCoordinateRegionMake(myLocation, span)
+        
+        Map.setRegion(region, animated: true)
+        
+        self.Map.showsUserLocation = true
+        
+        print("Im here")
+        
+        
+    }
+    
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -20,6 +46,15 @@ class homePageViewController: UIViewController {
         print("Loaded home view")
         
         userName.setTitle(userEmail,for: .normal)
+        
+        manager.delegate = self
+        manager.desiredAccuracy = kCLLocationAccuracyBest
+        manager.requestWhenInUseAuthorization()
+        manager.startUpdatingLocation()
+        
+        
+//        var myLocation = CLLocationCoordinate2DMake(<#T##latitude: CLLocationDegrees##CLLocationDegrees#>, <#T##longitude: CLLocationDegrees##CLLocationDegrees#>)
+        
     }
 
     override func didReceiveMemoryWarning() {

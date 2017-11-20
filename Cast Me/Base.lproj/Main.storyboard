@@ -207,6 +207,7 @@
                         <viewLayoutGuide key="safeArea" id="f3M-Fh-ic7"/>
                     </view>
                     <connections>
+                        <outlet property="Map" destination="vcP-cv-nHc" id="HTo-Fw-whu"/>
                         <outlet property="userName" destination="fbA-VZ-Lgd" id="cZ6-nF-VG3"/>
                     </connections>
                 </viewController>
