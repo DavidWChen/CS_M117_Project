@@ -10,7 +10,8 @@ import UIKit
 
 class homePageViewController: UIViewController {
 
-    var userEmail : String?
+    //var userEmail : String?
+    var thisUser: GIDGoogleUser?
     @IBOutlet weak var userName: UIButton!
     
     override func viewDidLoad() {
@@ -19,7 +20,21 @@ class homePageViewController: UIViewController {
         // Do any additional setup after loading the view.
         print("Loaded home view")
         
-        userName.setTitle(userEmail,for: .normal)
+        if thisUser != nil {
+            userName.setTitle(thisUser?.profile.name, for: .normal)
+        }
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        // Create a new variable to store the instance of PlayerTableViewController
+        
+        if let destination = segue.destination as? searchPageViewController {
+            destination.thisUser = thisUser
+        } else if let destination = segue.destination as? myProfileViewController {
+            destination.thisUser = thisUser
+        } else if let destination = segue.destination as? friendsListViewController {
+            destination.thisUser = thisUser
+        }
     }
 
     override func didReceiveMemoryWarning() {
