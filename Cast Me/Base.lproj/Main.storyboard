@@ -80,7 +80,7 @@
                                 <state key="normal" title="Next"/>
                                 <connections>
                                     <action selector="nextButtonHome:" destination="BYZ-38-t0r" eventType="touchUpInside" id="KY9-IK-2Zg"/>
-                                    <segue destination="9tW-k2-8ce" kind="show" id="miJ-ns-Ou0"/>
+                                    <segue destination="9tW-k2-8ce" kind="show" identifier="ToHome" id="miJ-ns-Ou0"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="slK-zJ-Vkd">
@@ -206,6 +206,9 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <viewLayoutGuide key="safeArea" id="f3M-Fh-ic7"/>
                     </view>
+                    <connections>
+                        <outlet property="userName" destination="fbA-VZ-Lgd" id="cZ6-nF-VG3"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="8Ie-SG-snz" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -496,9 +499,9 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="SC4-8n-4vs"/>
-        <segue reference="swM-Y9-ynn"/>
-        <segue reference="n1n-bf-QVI"/>
-        <segue reference="UMO-xZ-cLU"/>
+        <segue reference="1fZ-tA-e3h"/>
+        <segue reference="dyX-rc-KCv"/>
+        <segue reference="jUb-d4-fzi"/>
+        <segue reference="miJ-ns-Ou0"/>
     </inferredMetricsTieBreakers>
 </document>

@@ -24,7 +24,8 @@ class ViewController: UIViewController, GIDSignInDelegate, GIDSignInUIDelegate {
     @IBOutlet weak var signInButton: GIDSignInButton!
     
     //label to display name of logged in user
-    @IBOutlet weak var labelUserEmail: UILabel!
+    //@IBOutlet weak var labelUserEmail: UILabel!
+    var labelUserEmail = ""
     
     
     override func viewDidLoad() {
@@ -53,7 +54,7 @@ class ViewController: UIViewController, GIDSignInDelegate, GIDSignInUIDelegate {
         googleSignInButton.frame.origin = CGPoint(x: view.center.x, y: view.center.y - 200)
         view.addSubview(googleSignInButton)
         
-        if labelUserEmail == nil {
+        if labelUserEmail == "" {
             GIDSignIn.sharedInstance().signOut()
         }
         
@@ -75,6 +76,22 @@ class ViewController: UIViewController, GIDSignInDelegate, GIDSignInUIDelegate {
         //if success display the email on label
         //labelUserEmail.text = user.profile.email
         Name.text = user.profile.email
+        labelUserEmail = user.profile.name
+        print("Sign in successful")
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        if labelUserEmail != "" {
+            self.performSegue(withIdentifier: "ToHome", sender: self)
+        }
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        // Create a new variable to store the instance of PlayerTableViewController
+        let destinationVC = segue.destination as! homePageViewController
+        destinationVC.userEmail = labelUserEmail
     }
 
     

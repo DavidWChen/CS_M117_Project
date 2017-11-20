@@ -10,10 +10,16 @@ import UIKit
 
 class homePageViewController: UIViewController {
 
+    var userEmail : String?
+    @IBOutlet weak var userName: UIButton!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
+        print("Loaded home view")
+        
+        userName.setTitle(userEmail,for: .normal)
     }
 
     override func didReceiveMemoryWarning() {
