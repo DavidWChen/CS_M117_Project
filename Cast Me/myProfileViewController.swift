@@ -11,11 +11,15 @@ import UIKit
 class myProfileViewController: UIViewController {
     
     var thisUser: GIDGoogleUser?
-
+    @IBOutlet weak var myUsername: UILabel!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
+        if thisUser != nil {
+            myUsername.text = thisUser?.profile.name
+        }
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {

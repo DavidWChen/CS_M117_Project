@@ -257,6 +257,9 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <viewLayoutGuide key="safeArea" id="a5d-8x-tC3"/>
                     </view>
+                    <connections>
+                        <outlet property="myUsername" destination="eLe-AM-wTD" id="AWG-CS-suA"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="qdM-ov-w6F" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -459,6 +462,22 @@
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="A4n-t9-D6h" id="Yrs-Tv-gzT">
                                             <rect key="frame" x="0.0" y="0.0" width="240" height="43.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Email Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tOo-5y-9c0">
+                                                    <rect key="frame" x="15" y="22" width="225" height="21"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Name Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="04i-R1-Roa">
+                                                    <rect key="frame" x="15" y="0.0" width="225" height="21"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                 </prototypes>
@@ -482,6 +501,9 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <viewLayoutGuide key="safeArea" id="SME-A7-HVe"/>
                     </view>
+                    <connections>
+                        <outlet property="friendsList" destination="Cal-Nu-ycF" id="CU8-Hh-Jwg"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="gZU-GS-B9l" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -490,8 +512,8 @@
     </scenes>
     <inferredMetricsTieBreakers>
         <segue reference="1fZ-tA-e3h"/>
-        <segue reference="dyX-rc-KCv"/>
+        <segue reference="swM-Y9-ynn"/>
         <segue reference="jUb-d4-fzi"/>
-        <segue reference="miJ-ns-Ou0"/>
+        <segue reference="UMO-xZ-cLU"/>
     </inferredMetricsTieBreakers>
 </document>

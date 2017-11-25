@@ -9,6 +9,7 @@
 import UIKit
 import MapKit
 import CoreLocation
+import Firebase
 
 
 class homePageViewController: UIViewController,CLLocationManagerDelegate {
@@ -56,6 +57,12 @@ class homePageViewController: UIViewController,CLLocationManagerDelegate {
         if thisUser != nil {
             userName.setTitle(thisUser?.profile.name, for: .normal)
         }
+        
+        var ref: FIRDatabaseReference?
+        ref = FIRDatabase.database().reference()
+        let username = (thisUser?.profile.name)!
+        let useremail = (thisUser?.profile.email)!
+        ref?.child("users/" + username + "/email").setValue(useremail)
     }
     
     override func viewDidAppear(_ animated: Bool) {
