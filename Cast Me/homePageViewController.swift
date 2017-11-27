@@ -16,11 +16,12 @@ class homePageViewController: UIViewController,CLLocationManagerDelegate {
 
     //var userEmail : String?
     var thisUser: GIDGoogleUser?
+    let ref = FIRDatabase.database().reference()
     @IBOutlet weak var userName: UIButton!
     @IBOutlet weak var Map: MKMapView!
     
     let manager = CLLocationManager()
-    
+
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation])
     {
         let location = locations[0]
@@ -87,14 +88,11 @@ class homePageViewController: UIViewController,CLLocationManagerDelegate {
     }
     
     
-    
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         // Do any additional setup after loading the view.
         print("Loaded home view")
-        
-        //userName.setTitle(userEmail,for: .normal)
         
         manager.delegate = self
         manager.desiredAccuracy = kCLLocationAccuracyBest
@@ -109,12 +107,34 @@ class homePageViewController: UIViewController,CLLocationManagerDelegate {
         ref = FIRDatabase.database().reference()
         let username = (thisUser?.profile.name)!
         let useremail = (thisUser?.profile.email)!
-        ref?.child("users/" + username + "/email").setValue(useremail)
         
-        
+        /*let cleanEmail = useremail.replacingOccurrences(of: ".", with: ",")
+        ref?.child("users/" + cleanEmail + "/name").setValue(username)
+        //var cleanEmail = useremail.replace(/\./g, ',')
+        print(cleanEmail)
+        ref?.child("users/" + username + "/email").setValue(useremail)*/
         
         
     }
+    
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation])
+    {
+        let location = locations[0]
+        let span:MKCoordinateSpan = MKCoordinateSpanMake(0.01, 0.01)
+        
+        let myLocation:CLLocationCoordinate2D = CLLocationCoordinate2DMake(location.coordinate.latitude, location.coordinate.longitude)
+        
+        let region:MKCoordinateRegion = MKCoordinateRegionMake(myLocation, span)
+        
+        Map.setRegion(region, animated: true)
+        
+        self.Map.showsUserLocation = true
+        
+        print("Im here")
+        
+        
+    }
+    
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
