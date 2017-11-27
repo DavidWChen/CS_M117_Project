@@ -21,6 +21,72 @@ class homePageViewController: UIViewController,CLLocationManagerDelegate {
     @IBOutlet weak var Map: MKMapView!
     
     let manager = CLLocationManager()
+
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation])
+    {
+        let location = locations[0]
+        let span:MKCoordinateSpan = MKCoordinateSpanMake(0.04, 0.04)
+        
+        let myLocation:CLLocationCoordinate2D = CLLocationCoordinate2DMake(location.coordinate.latitude, location.coordinate.longitude)
+        
+        let region:MKCoordinateRegion = MKCoordinateRegionMake(myLocation, span)
+        
+        Map.setRegion(region, animated: true)
+        
+        self.Map.showsUserLocation = true
+        
+        let annotation = MKPointAnnotation()
+        let first = "Distance = "
+        
+        let Mycoordinate = CLLocation(latitude: location.coordinate.latitude, longitude: location.coordinate.longitude)
+        
+        let distance = Mycoordinate.distance(from: Mycoordinate)/1609
+        
+        let distanceString = String(distance)
+        let subtitle = first + distanceString + "mi"
+        
+        annotation.coordinate = myLocation
+        annotation.title = "My Location"
+        annotation.subtitle = subtitle
+        
+        Map.addAnnotation(annotation)
+        
+        let JohnsCoordinate = CLLocation(latitude: 37.7749, longitude:-122.4194)
+        let JohnsLocation:CLLocationCoordinate2D = CLLocationCoordinate2DMake(37.7749, -122.4194)
+
+        
+        let Johnsdistance = JohnsCoordinate.distance(from: Mycoordinate)/1609
+        
+        let JohnsdistanceString = String(format: "%0.2f", Johnsdistance)
+        let Johnssubtitle = first + JohnsdistanceString + "mi"
+        
+        let annotation1 = MKPointAnnotation()
+
+        annotation1.coordinate = JohnsLocation
+        annotation1.title = "Johns Location"
+        annotation1.subtitle = Johnssubtitle
+        
+        
+        Map.addAnnotation(annotation1)
+        
+        /*
+         Pseudocode:
+            for all my friends
+                pull their location coordinates
+                find distance from my coordinates
+                create an annotation.coordinate given their coordinate
+                create an annotation.title given their name
+                calculate distance from me using Mycoordinate
+                create an annotation.subtitle given their distance from me
+         
+ */
+        
+        
+        print("Im here")
+        
+        
+    }
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -41,10 +107,14 @@ class homePageViewController: UIViewController,CLLocationManagerDelegate {
         ref = FIRDatabase.database().reference()
         let username = (thisUser?.profile.name)!
         let useremail = (thisUser?.profile.email)!
-        let cleanEmail = useremail.replacingOccurrences(of: ".", with: ",")
+        
+        /*let cleanEmail = useremail.replacingOccurrences(of: ".", with: ",")
         ref?.child("users/" + cleanEmail + "/name").setValue(username)
         //var cleanEmail = useremail.replace(/\./g, ',')
         print(cleanEmail)
+        ref?.child("users/" + username + "/email").setValue(useremail)*/
+        
+        
     }
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation])
