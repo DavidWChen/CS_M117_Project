@@ -16,10 +16,36 @@ class homePageViewController: UIViewController,CLLocationManagerDelegate {
 
     //var userEmail : String?
     var thisUser: GIDGoogleUser?
+    let ref = FIRDatabase.database().reference()
     @IBOutlet weak var userName: UIButton!
     @IBOutlet weak var Map: MKMapView!
     
     let manager = CLLocationManager()
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        // Do any additional setup after loading the view.
+        print("Loaded home view")
+        
+        manager.delegate = self
+        manager.desiredAccuracy = kCLLocationAccuracyBest
+        manager.requestWhenInUseAuthorization()
+        manager.startUpdatingLocation()
+        
+        if thisUser != nil {
+            userName.setTitle(thisUser?.profile.name, for: .normal)
+        }
+        
+        var ref: FIRDatabaseReference?
+        ref = FIRDatabase.database().reference()
+        let username = (thisUser?.profile.name)!
+        let useremail = (thisUser?.profile.email)!
+        let cleanEmail = useremail.replacingOccurrences(of: ".", with: ",")
+        ref?.child("users/" + cleanEmail + "/name").setValue(username)
+        //var cleanEmail = useremail.replace(/\./g, ',')
+        print(cleanEmail)
+    }
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation])
     {
@@ -39,31 +65,6 @@ class homePageViewController: UIViewController,CLLocationManagerDelegate {
         
     }
     
-    
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
-        print("Loaded home view")
-        
-        //userName.setTitle(userEmail,for: .normal)
-        
-        manager.delegate = self
-        manager.desiredAccuracy = kCLLocationAccuracyBest
-        manager.requestWhenInUseAuthorization()
-        manager.startUpdatingLocation()
-        
-        if thisUser != nil {
-            userName.setTitle(thisUser?.profile.name, for: .normal)
-        }
-        
-        var ref: FIRDatabaseReference?
-        ref = FIRDatabase.database().reference()
-        let username = (thisUser?.profile.name)!
-        let useremail = (thisUser?.profile.email)!
-        ref?.child("users/" + username + "/email").setValue(useremail)
-    }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)

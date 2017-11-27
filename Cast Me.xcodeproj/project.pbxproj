@@ -14,6 +14,7 @@
 		36B8ACDB1FC2CA7200FAE992 /* generalProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36B8ACDA1FC2CA7200FAE992 /* generalProfileViewController.swift */; };
 		36B8ACDD1FC2CAF600FAE992 /* editInterestsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36B8ACDC1FC2CAF600FAE992 /* editInterestsViewController.swift */; };
 		36B8ACE01FC3952E00FAE992 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 36B8ACDF1FC3952200FAE992 /* CoreLocation.framework */; };
+		64323E5A1FCAA0E300313F7E /* UserTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64323E591FCAA0E300313F7E /* UserTableViewCell.swift */; };
 		64A4255C1FC11ACA00C18AD2 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 64A4255B1FC11ACA00C18AD2 /* GoogleService-Info.plist */; };
 		64F92F1A1FBA495800D84C46 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64F92F191FBA495800D84C46 /* AppDelegate.swift */; };
 		64F92F1C1FBA495800D84C46 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64F92F1B1FBA495800D84C46 /* ViewController.swift */; };
@@ -33,6 +34,7 @@
 		36B8ACDF1FC3952200FAE992 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		3883D8613ECC37D5F1F55016 /* Pods-Cast Me.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Cast Me.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Cast Me/Pods-Cast Me.debug.xcconfig"; sourceTree = "<group>"; };
 		53D2D704384F3376A4D2DEEA /* Pods-Cast Me.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Cast Me.release.xcconfig"; path = "Pods/Target Support Files/Pods-Cast Me/Pods-Cast Me.release.xcconfig"; sourceTree = "<group>"; };
+		64323E591FCAA0E300313F7E /* UserTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserTableViewCell.swift; sourceTree = "<group>"; };
 		64A425581FC1054900C18AD2 /* Cast Me-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Cast Me-Bridging-Header.h"; sourceTree = "<group>"; };
 		64A4255B1FC11ACA00C18AD2 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = SOURCE_ROOT; };
 		64F92F161FBA495800D84C46 /* Cast Me.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Cast Me.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -94,6 +96,7 @@
 				36B8ACD41FC2C2C000FAE992 /* searchPageViewController.swift */,
 				36B8ACD61FC2C2DA00FAE992 /* myProfileViewController.swift */,
 				36B8ACD81FC2C95300FAE992 /* friendsListViewController.swift */,
+				64323E591FCAA0E300313F7E /* UserTableViewCell.swift */,
 				36B8ACDA1FC2CA7200FAE992 /* generalProfileViewController.swift */,
 				36B8ACDC1FC2CAF600FAE992 /* editInterestsViewController.swift */,
 				64F92F1D1FBA495800D84C46 /* Main.storyboard */,
@@ -248,6 +251,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				36B8ACD31FC2C2B600FAE992 /* homePageViewController.swift in Sources */,
+				64323E5A1FCAA0E300313F7E /* UserTableViewCell.swift in Sources */,
 				64F92F1C1FBA495800D84C46 /* ViewController.swift in Sources */,
 				36B8ACDB1FC2CA7200FAE992 /* generalProfileViewController.swift in Sources */,
 				36B8ACD71FC2C2DA00FAE992 /* myProfileViewController.swift in Sources */,
