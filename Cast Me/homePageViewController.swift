@@ -111,38 +111,27 @@ class homePageViewController: UIViewController,CLLocationManagerDelegate {
         let cleanEmail = useremail.replacingOccurrences(of: ".", with: ",")
         
         var done1 = false
-        let url = URL(string: "https://fir-cast-me.firebaseio.com/users.json")
-        let urlRequest = URLRequest(url: url!)
-        let session = URLSession.shared
-        let task = session.dataTask(with: urlRequest, completionHandler: {
+        let urlRequest = URLRequest(url: URL(string: "https://fir-cast-me.firebaseio.com/users.json")!)
+        let task = URLSession.shared.dataTask(with: urlRequest, completionHandler: {
             (data, response, error) in
-            guard let responseData = data else {
-                print("Error: did not receive data")
-                return
-            }
+            let responseData = data
             do {
-                if let todoJSON = try JSONSerialization.jsonObject(with: responseData, options: []) as? [String: Any]{
-                    //print(todoJSON)
-                    /*friend_email = todoJSON["friend"+String(indexPath.row)] as! String
-                    new_friend_email = friend_email
-                    new_friend_email = new_friend_email.replacingOccurrences(of: ",", with: ".")*/
+                if let todoJSON = try JSONSerialization.jsonObject(with: responseData!, options: []) as? [String: Any]{
                     if let user = try todoJSON[cleanEmail] as? [String: Any] {
                         done1 = true
                     } else {
                         ref?.child("users/" + cleanEmail + "/name").setValue(username)
                         ref?.child("gps_location/" + cleanEmail + "/location1").setValue(0)
                         ref?.child("friends_list/" + cleanEmail + "/friend_count").setValue(0)
+                        ref?.child("user_interests/" + cleanEmail + "/interests").setValue(0)
                         done1 = true
                     }
-                } else {
-                    print("error")
                 }
             } catch {
                 print("error")
                 return
             }
-        })
-        task.resume()
+        }).resume()
         while(!done1){
             
         }
