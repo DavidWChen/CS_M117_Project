@@ -108,31 +108,44 @@ class homePageViewController: UIViewController,CLLocationManagerDelegate {
         let username = (thisUser?.profile.name)!
         let useremail = (thisUser?.profile.email)!
         
-        /*let cleanEmail = useremail.replacingOccurrences(of: ".", with: ",")
-        ref?.child("users/" + cleanEmail + "/name").setValue(username)
-        //var cleanEmail = useremail.replace(/\./g, ',')
-        print(cleanEmail)
-        ref?.child("users/" + username + "/email").setValue(useremail)*/
+        let cleanEmail = useremail.replacingOccurrences(of: ".", with: ",")
         
-        
-    }
-    
-    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation])
-    {
-        let location = locations[0]
-        let span:MKCoordinateSpan = MKCoordinateSpanMake(0.01, 0.01)
-        
-        let myLocation:CLLocationCoordinate2D = CLLocationCoordinate2DMake(location.coordinate.latitude, location.coordinate.longitude)
-        
-        let region:MKCoordinateRegion = MKCoordinateRegionMake(myLocation, span)
-        
-        Map.setRegion(region, animated: true)
-        
-        self.Map.showsUserLocation = true
-        
-        print("Im here")
-        
-        
+        var done1 = false
+        let url = URL(string: "https://fir-cast-me.firebaseio.com/users.json")
+        let urlRequest = URLRequest(url: url!)
+        let session = URLSession.shared
+        let task = session.dataTask(with: urlRequest, completionHandler: {
+            (data, response, error) in
+            guard let responseData = data else {
+                print("Error: did not receive data")
+                return
+            }
+            do {
+                if let todoJSON = try JSONSerialization.jsonObject(with: responseData, options: []) as? [String: Any]{
+                    //print(todoJSON)
+                    /*friend_email = todoJSON["friend"+String(indexPath.row)] as! String
+                    new_friend_email = friend_email
+                    new_friend_email = new_friend_email.replacingOccurrences(of: ",", with: ".")*/
+                    if let user = try todoJSON[cleanEmail] as? [String: Any] {
+                        done1 = true
+                    } else {
+                        ref?.child("users/" + cleanEmail + "/name").setValue(username)
+                        ref?.child("gps_location/" + cleanEmail + "/location1").setValue(0)
+                        ref?.child("friends_list/" + cleanEmail + "/friend_count").setValue(0)
+                        done1 = true
+                    }
+                } else {
+                    print("error")
+                }
+            } catch {
+                print("error")
+                return
+            }
+        })
+        task.resume()
+        while(!done1){
+            
+        }
     }
     
     

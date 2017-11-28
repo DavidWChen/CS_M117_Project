@@ -134,7 +134,6 @@ class friendsListViewController: UIViewController, UITableViewDelegate, UITableV
     
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        
         let plsemail : String = cleanEmail!
         
         var done = false

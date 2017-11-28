@@ -74,10 +74,6 @@ class ViewController: UIViewController, GIDSignInDelegate, GIDSignInUIDelegate {
             return
         }
         
-        //if success display the email on label
-        //labelUserEmail.text = user.profile.email
-        //Name.text = user.profile.email
-        //labelUserEmail = user.profile.name
         thisUser = user
         print("Sign in successful")
     }
