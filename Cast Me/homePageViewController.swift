@@ -19,6 +19,8 @@ class homePageViewController: UIViewController,CLLocationManagerDelegate {
     let ref = FIRDatabase.database().reference()
     @IBOutlet weak var userName: UIButton!
     @IBOutlet weak var Map: MKMapView!
+    var user_latitude: Double?
+    var user_longitude: Double?
     
     let manager = CLLocationManager()
 
@@ -28,6 +30,13 @@ class homePageViewController: UIViewController,CLLocationManagerDelegate {
         let span:MKCoordinateSpan = MKCoordinateSpanMake(0.04, 0.04)
         
         let myLocation:CLLocationCoordinate2D = CLLocationCoordinate2DMake(location.coordinate.latitude, location.coordinate.longitude)
+        user_latitude = location.coordinate.latitude as? Double
+        user_longitude = location.coordinate.longitude as? Double
+        let useremail = (thisUser?.profile.email)!
+        let cleanEmail = useremail.replacingOccurrences(of: ".", with: ",")
+        ref.child("gps_location/" + cleanEmail + "/latitude").setValue(user_latitude)
+        ref.child("gps_location/" + cleanEmail + "/longitude").setValue(user_longitude)
+        
         //write coordinates to firebase
         let region:MKCoordinateRegion = MKCoordinateRegionMake(myLocation, span)
         
@@ -155,8 +164,8 @@ class homePageViewController: UIViewController,CLLocationManagerDelegate {
             userName.setTitle(thisUser?.profile.name, for: .normal)
         }
         
-        var ref: FIRDatabaseReference?
-        ref = FIRDatabase.database().reference()
+        //var ref: FIRDatabaseReference?
+        //ref = FIRDatabase.database().reference()
         let username = (thisUser?.profile.name)!
         let useremail = (thisUser?.profile.email)!
         
@@ -171,10 +180,10 @@ class homePageViewController: UIViewController,CLLocationManagerDelegate {
                     if let user = try todoJSON[cleanEmail] as? [String: Any] {
                         done1 = true
                     } else {
-                        ref?.child("users/" + cleanEmail + "/name").setValue(username)
-                        ref?.child("gps_location/" + cleanEmail + "/location1").setValue(0)
-                        ref?.child("friends_list/" + cleanEmail + "/friend_count").setValue(0)
-                        ref?.child("user_interests/" + cleanEmail + "/interests").setValue(0)
+                        self.ref.child("users/" + cleanEmail + "/name").setValue(username)
+                        self.ref.child("gps_location/" + cleanEmail + "/location1").setValue(0)
+                        self.ref.child("friends_list/" + cleanEmail + "/friend_count").setValue(0)
+                        self.ref.child("user_interests/" + cleanEmail + "/interests").setValue(0)
                         done1 = true
                     }
                 }
