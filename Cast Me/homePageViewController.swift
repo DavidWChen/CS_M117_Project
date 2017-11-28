@@ -26,124 +26,106 @@ class homePageViewController: UIViewController,CLLocationManagerDelegate {
 
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation])
     {
-        let location = locations[0]
-        let span:MKCoordinateSpan = MKCoordinateSpanMake(0.04, 0.04)
-        
-        let myLocation:CLLocationCoordinate2D = CLLocationCoordinate2DMake(location.coordinate.latitude, location.coordinate.longitude)
-        user_latitude = location.coordinate.latitude as? Double
-        user_longitude = location.coordinate.longitude as? Double
-        let useremail = (thisUser?.profile.email)!
-        let cleanEmail = useremail.replacingOccurrences(of: ".", with: ",")
-        ref.child("gps_location/" + cleanEmail + "/latitude").setValue(user_latitude)
-        ref.child("gps_location/" + cleanEmail + "/longitude").setValue(user_longitude)
-        
-        //write coordinates to firebase
-        let region:MKCoordinateRegion = MKCoordinateRegionMake(myLocation, span)
-        
-        Map.setRegion(region, animated: true)
-        
-        self.Map.showsUserLocation = true
-        
-        let annotation = MKPointAnnotation()
-        let first = "Distance = "
-        
-        let Mycoordinate = CLLocation(latitude: location.coordinate.latitude, longitude: location.coordinate.longitude)
-        
-        let distance = Mycoordinate.distance(from: Mycoordinate)/1609
-        
-        let distanceString = String(distance)
-        let subtitle = first + distanceString + "mi"
-        
-        annotation.coordinate = myLocation
-        annotation.title = "My Location"
-        annotation.subtitle = subtitle
-        
-        Map.addAnnotation(annotation)
-        
-        let JohnsCoordinate = CLLocation(latitude: 37.7749, longitude:-122.4194)
-        let JohnsLocation:CLLocationCoordinate2D = CLLocationCoordinate2DMake(37.7749, -122.4194)
+        if thisUser != nil {
+            let location = locations[0]
+            let span:MKCoordinateSpan = MKCoordinateSpanMake(0.04, 0.04)
+            
+            let myLocation:CLLocationCoordinate2D = CLLocationCoordinate2DMake(location.coordinate.latitude, location.coordinate.longitude)
+            user_latitude = location.coordinate.latitude as? Double
+            user_longitude = location.coordinate.longitude as? Double
+            let useremail = (thisUser?.profile.email)!
+            let cleanEmail = useremail.replacingOccurrences(of: ".", with: ",")
+            ref.child("gps_location/" + cleanEmail + "/latitude").setValue(user_latitude)
+            ref.child("gps_location/" + cleanEmail + "/longitude").setValue(user_longitude)
+            
+            //write coordinates to firebase
+            let region:MKCoordinateRegion = MKCoordinateRegionMake(myLocation, span)
+            
+            Map.setRegion(region, animated: true)
+            
+            self.Map.showsUserLocation = true
+            
+            let annotation = MKPointAnnotation()
+            let first = "Distance = "
+            
+            let Mycoordinate = CLLocation(latitude: location.coordinate.latitude, longitude: location.coordinate.longitude)
+            
+            let distance = Mycoordinate.distance(from: Mycoordinate)/1609
+            
+            let distanceString = String(distance)
+            let subtitle = first + distanceString + "mi"
+            
+            annotation.coordinate = myLocation
+            annotation.title = "My Location"
+            annotation.subtitle = subtitle
+            
+            Map.addAnnotation(annotation)
+            
+            let JohnsCoordinate = CLLocation(latitude: 37.7749, longitude:-122.4194)
+            let JohnsLocation:CLLocationCoordinate2D = CLLocationCoordinate2DMake(37.7749, -122.4194)
 
-        
-        let Johnsdistance = JohnsCoordinate.distance(from: Mycoordinate)/1609
-        
-        let JohnsdistanceString = String(format: "%0.2f", Johnsdistance)
-        let Johnssubtitle = first + JohnsdistanceString + "mi"
-        
-        let annotation1 = MKPointAnnotation()
+            
+            let Johnsdistance = JohnsCoordinate.distance(from: Mycoordinate)/1609
+            
+            let JohnsdistanceString = String(format: "%0.2f", Johnsdistance)
+            let Johnssubtitle = first + JohnsdistanceString + "mi"
+            
+            let annotation1 = MKPointAnnotation()
 
-        annotation1.coordinate = JohnsLocation
-        annotation1.title = "Johns Location"
-        annotation1.subtitle = Johnssubtitle
-        
-        
-        Map.addAnnotation(annotation1)
-        
-    
-        
-        /*  pull friend count
-            instantiate array of annotations [friend count]
-                for all my friends
-                    pull their location coordinates
-                            find distance from my coordinates
-                            create an annotation.coordinate given their coordinate
-                            create an annotation.title given their name
-                            calculate distance from me using Mycoordinate
-                            create an annotation.subtitle given their distance from me
-        */
-        
-        var numFriends = 0
-        var done1 = false
-        let urlRequest = URLRequest(url: URL(string: "https://fir-cast-me.firebaseio.com/friends_list.json")!)
-        let task = URLSession.shared.dataTask(with: urlRequest, completionHandler: {
-            (data, response, error) in
-            let responseData = data
-            do {
-                if let todoJSON = try JSONSerialization.jsonObject(with: responseData!, options: []) as? [String: Any]{
-                    if let user = try todoJSON[cleanEmail] as? [String: Any] {
-                        numFriends = user["friend_count"] as! Int
+            annotation1.coordinate = JohnsLocation
+            annotation1.title = "Johns Location"
+            annotation1.subtitle = Johnssubtitle
+            
+            
+            Map.addAnnotation(annotation1)
+            
+            /*  pull friend count
+                instantiate array of annotations [friend count]
+                    for all my friends
+                        pull their location coordinates
+                                find distance from my coordinates
+                                create an annotation.coordinate given their coordinate
+                                create an annotation.title given their name
+                                calculate distance from me using Mycoordinate
+                                create an annotation.subtitle given their distance from me
+             */
+
+            var numFriends = 0
+            var done1 = false
+            let urlRequest = URLRequest(url: URL(string: "https://fir-cast-me.firebaseio.com/friends_list.json")!)
+            let task = URLSession.shared.dataTask(with: urlRequest, completionHandler: {
+                (data, response, error) in
+                let responseData = data
+                do {
+                    if let todoJSON = try JSONSerialization.jsonObject(with: responseData!, options: []) as? [String: Any]{
+                        if let user = try todoJSON[cleanEmail] as? [String: Any] {
+                            numFriends = user["friend_count"] as! Int
+                        }
                     }
+                } catch {
+                    print("error")
+                    return
                 }
-            } catch {
-                print("error")
-                return
+                done1 = true
+            }).resume()
+            while(!done1){}
+            
+            var a = 0
+            while (a < numFriends)
+            {
+                //get friend[a] coordinate
+                //let names[a] = friends name
+                //let distances[a] = friend[a].distance(from: Mycoordinate)/1609
+                //let subtitles[a] = first + String(format: "%0.2f", distances[a]) + "mi"
+                //let pins[a].coordinate = gotten coordinate
+                //let pins[a].title = names[a]
+                //let pins[a].subtitle = subtitles[a]
+                //Map.addAnnotation(pins[a])
+                a = a+1
+                
             }
-        }).resume()
-        while(!done1){
-            
+            print("Im here")
         }
-        
-        
-        
-        
-        
-        
-        
-        var pins:[MKPointAnnotation] = []
-        var distances:[Int] = []
-        var names:[String] = []
-        var subtitles:[String] = []
-        
-        
-        var a = 0
-        while (a < numFriends)
-        {
-            //get friend[a] coordinate
-            //let names[a] = friends name
-            //let distances[a] = friend[a].distance(from: Mycoordinate)/1609
-            //let subtitles[a] = first + String(format: "%0.2f", distances[a]) + "mi"
-            //let pins[a].coordinate = gotten coordinate
-            //let pins[a].title = names[a]
-            //let pins[a].subtitle = subtitles[a]
-            //Map.addAnnotation(pins[a])
-            a = a+1
-            
-        }
-        
-    
-        
-        print("Im here")
-        
-        
     }
     
     
@@ -158,38 +140,37 @@ class homePageViewController: UIViewController,CLLocationManagerDelegate {
         manager.requestWhenInUseAuthorization()
         manager.startUpdatingLocation()
         
-        if thisUser != nil {
+        if thisUser == nil {
+            self.performSegue(withIdentifier: "ToLogin", sender: self)
+        } else {
             userName.setTitle(thisUser?.profile.name, for: .normal)
-        }
-        
-        //var ref: FIRDatabaseReference?
-        //ref = FIRDatabase.database().reference()
-        let username = (thisUser?.profile.name)!
-        let useremail = (thisUser?.profile.email)!
-        
-        let cleanEmail = useremail.replacingOccurrences(of: ".", with: ",")
-        
-        var done1 = false
-        let urlRequest = URLRequest(url: URL(string: "https://fir-cast-me.firebaseio.com/users.json")!)
-        URLSession.shared.dataTask(with: urlRequest, completionHandler: {
-            (data, response, error) in
-            do {
-                if let todoJSON = try JSONSerialization.jsonObject(with: data!, options: []) as? [String: Any]{
-                    if let user = try todoJSON[cleanEmail] as? [String: Any] {
-                        done1 = true
-                    } else {
-                        self.ref.child("users/" + cleanEmail + "/name").setValue(username)
-                        self.ref.child("gps_location/" + cleanEmail + "/location1").setValue(0)
-                        self.ref.child("friends_list/" + cleanEmail + "/friend_count").setValue(0)
-                        self.ref.child("user_interests/" + cleanEmail + "/interests").setValue(0)
-                        done1 = true
+            let username = (thisUser?.profile.name)!
+            let useremail = (thisUser?.profile.email)!
+            
+            let cleanEmail = useremail.replacingOccurrences(of: ".", with: ",")
+            
+            var done1 = false
+            let urlRequest = URLRequest(url: URL(string: "https://fir-cast-me.firebaseio.com/users.json")!)
+            URLSession.shared.dataTask(with: urlRequest, completionHandler: {
+                (data, response, error) in
+                do {
+                    if let todoJSON = try JSONSerialization.jsonObject(with: data!, options: []) as? [String: Any]{
+                        if let user = try todoJSON[cleanEmail] as? [String: Any] {
+                            done1 = true
+                        } else {
+                            self.ref.child("users/" + cleanEmail + "/name").setValue(username)
+                            self.ref.child("gps_location/" + cleanEmail + "/location1").setValue(0)
+                            self.ref.child("friends_list/" + cleanEmail + "/friend_count").setValue(0)
+                            self.ref.child("user_interests/" + cleanEmail + "/interests").setValue(0)
+                            done1 = true
+                        }
                     }
+                } catch {
+                    print("error")
                 }
-            } catch {
-                print("error")
-            }
-        }).resume()
-        while(!done1){}
+            }).resume()
+            while(!done1){}
+        }
     }
     
     
