@@ -37,6 +37,7 @@ class homePageViewController: UIViewController,CLLocationManagerDelegate {
         ref.child("gps_location/" + cleanEmail + "/latitude").setValue(user_latitude)
         ref.child("gps_location/" + cleanEmail + "/longitude").setValue(user_longitude)
         
+        //write coordinates to firebase
         let region:MKCoordinateRegion = MKCoordinateRegionMake(myLocation, span)
         
         Map.setRegion(region, animated: true)
@@ -87,8 +88,7 @@ class homePageViewController: UIViewController,CLLocationManagerDelegate {
          calculate distance from me using Mycoordinate
          create an annotation.subtitle given their distance from me
          */
-        
-        
+
         var numFriends = 0
         var done1 = false
         let urlRequest = URLRequest(url: URL(string: "https://fir-cast-me.firebaseio.com/friends_list.json")!)
@@ -109,13 +109,6 @@ class homePageViewController: UIViewController,CLLocationManagerDelegate {
         }).resume()
         while(!done1){}
         
-        
-        var pins:[MKPointAnnotation] = []
-        var distances:[Int] = []
-        var names:[String] = []
-        var subtitles:[String] = []
-        
-        
         var a = 0
         while (a < numFriends)
         {
@@ -130,13 +123,7 @@ class homePageViewController: UIViewController,CLLocationManagerDelegate {
             a = a+1
             
         }
-        
-        
-        
         print("Im here")
-
-        
-        
     }
     
     
