@@ -91,8 +91,7 @@ class homePageViewController: UIViewController,CLLocationManagerDelegate {
                             create an annotation.subtitle given their distance from me
         */
         
-        let useremail = (thisUser?.profile.email)!
-        let cleanEmail = useremail.replacingOccurrences(of: ".", with: ",")
+       
         var numFriends = 0
         var done1 = false
         let urlRequest = URLRequest(url: URL(string: "https://fir-cast-me.firebaseio.com/friends_list.json")!)
