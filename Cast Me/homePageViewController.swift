@@ -78,20 +78,17 @@ class homePageViewController: UIViewController,CLLocationManagerDelegate {
         
         Map.addAnnotation(annotation1)
         
-    
-        
         /*  pull friend count
-            instantiate array of annotations [friend count]
-                for all my friends
-                    pull their location coordinates
-                            find distance from my coordinates
-                            create an annotation.coordinate given their coordinate
-                            create an annotation.title given their name
-                            calculate distance from me using Mycoordinate
-                            create an annotation.subtitle given their distance from me
-        */
-        
-       
+         instantiate array of annotations [friend count]
+         for all my friends
+         pull their location coordinates
+         find distance from my coordinates
+         create an annotation.coordinate given their coordinate
+         create an annotation.title given their name
+         calculate distance from me using Mycoordinate
+         create an annotation.subtitle given their distance from me
+         */
+
         var numFriends = 0
         var done1 = false
         let urlRequest = URLRequest(url: URL(string: "https://fir-cast-me.firebaseio.com/friends_list.json")!)
@@ -108,22 +105,9 @@ class homePageViewController: UIViewController,CLLocationManagerDelegate {
                 print("error")
                 return
             }
+            done1 = true
         }).resume()
-        while(!done1){
-            
-        }
-        
-        
-        
-        
-        
-        
-        
-        var pins:[MKPointAnnotation] = []
-        var distances:[Int] = []
-        var names:[String] = []
-        var subtitles:[String] = []
-        
+        while(!done1){}
         
         var a = 0
         while (a < numFriends)
@@ -139,12 +123,7 @@ class homePageViewController: UIViewController,CLLocationManagerDelegate {
             a = a+1
             
         }
-        
-    
-        
         print("Im here")
-        
-        
     }
     
     
