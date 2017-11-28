@@ -164,11 +164,10 @@ class homePageViewController: UIViewController,CLLocationManagerDelegate {
         
         var done1 = false
         let urlRequest = URLRequest(url: URL(string: "https://fir-cast-me.firebaseio.com/users.json")!)
-        let task = URLSession.shared.dataTask(with: urlRequest, completionHandler: {
+        URLSession.shared.dataTask(with: urlRequest, completionHandler: {
             (data, response, error) in
-            let responseData = data
             do {
-                if let todoJSON = try JSONSerialization.jsonObject(with: responseData!, options: []) as? [String: Any]{
+                if let todoJSON = try JSONSerialization.jsonObject(with: data!, options: []) as? [String: Any]{
                     if let user = try todoJSON[cleanEmail] as? [String: Any] {
                         done1 = true
                     } else {
@@ -181,12 +180,9 @@ class homePageViewController: UIViewController,CLLocationManagerDelegate {
                 }
             } catch {
                 print("error")
-                return
             }
         }).resume()
-        while(!done1){
-            
-        }
+        while(!done1){}
     }
     
     
