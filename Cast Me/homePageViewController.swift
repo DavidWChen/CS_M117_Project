@@ -28,7 +28,7 @@ class homePageViewController: UIViewController,CLLocationManagerDelegate {
         let span:MKCoordinateSpan = MKCoordinateSpanMake(0.04, 0.04)
         
         let myLocation:CLLocationCoordinate2D = CLLocationCoordinate2DMake(location.coordinate.latitude, location.coordinate.longitude)
-        
+        //write coordinates to firebase
         let region:MKCoordinateRegion = MKCoordinateRegionMake(myLocation, span)
         
         Map.setRegion(region, animated: true)
@@ -69,18 +69,70 @@ class homePageViewController: UIViewController,CLLocationManagerDelegate {
         
         Map.addAnnotation(annotation1)
         
-        /*
-         Pseudocode:
-            for all my friends
-                pull their location coordinates
-                find distance from my coordinates
-                create an annotation.coordinate given their coordinate
-                create an annotation.title given their name
-                calculate distance from me using Mycoordinate
-                create an annotation.subtitle given their distance from me
-         
- */
+    
         
+        /*  pull friend count
+            instantiate array of annotations [friend count]
+                for all my friends
+                    pull their location coordinates
+                            find distance from my coordinates
+                            create an annotation.coordinate given their coordinate
+                            create an annotation.title given their name
+                            calculate distance from me using Mycoordinate
+                            create an annotation.subtitle given their distance from me
+        */
+        
+        let useremail = (thisUser?.profile.email)!
+        let cleanEmail = useremail.replacingOccurrences(of: ".", with: ",")
+        var numFriends = 0
+        var done1 = false
+        let urlRequest = URLRequest(url: URL(string: "https://fir-cast-me.firebaseio.com/friends_list.json")!)
+        let task = URLSession.shared.dataTask(with: urlRequest, completionHandler: {
+            (data, response, error) in
+            let responseData = data
+            do {
+                if let todoJSON = try JSONSerialization.jsonObject(with: responseData!, options: []) as? [String: Any]{
+                    if let user = try todoJSON[cleanEmail] as? [String: Any] {
+                        numFriends = user["friend_count"] as! Int
+                    }
+                }
+            } catch {
+                print("error")
+                return
+            }
+        }).resume()
+        while(!done1){
+            
+        }
+        
+        
+        
+        
+        
+        
+        
+        var pins:[MKPointAnnotation] = []
+        var distances:[Int] = []
+        var names:[String] = []
+        var subtitles:[String] = []
+        
+        
+        var a = 0
+        while (a < numFriends)
+        {
+            //get friend[a] coordinate
+            //let names[a] = friends name
+            //let distances[a] = friend[a].distance(from: Mycoordinate)/1609
+            //let subtitles[a] = first + String(format: "%0.2f", distances[a]) + "mi"
+            //let pins[a].coordinate = gotten coordinate
+            //let pins[a].title = names[a]
+            //let pins[a].subtitle = subtitles[a]
+            //Map.addAnnotation(pins[a])
+            a = a+1
+            
+        }
+        
+    
         
         print("Im here")
         
