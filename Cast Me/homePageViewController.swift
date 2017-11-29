@@ -48,7 +48,7 @@ class homePageViewController: UIViewController,CLLocationManagerDelegate {
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation])
     {
         let location = locations[0]
-        let span:MKCoordinateSpan = MKCoordinateSpanMake(0.04, 0.04)
+        let span:MKCoordinateSpan = MKCoordinateSpanMake(0.1, 0.1)
         
         let myLocation:CLLocationCoordinate2D = CLLocationCoordinate2DMake(location.coordinate.latitude, location.coordinate.longitude)
         user_latitude = location.coordinate.latitude
@@ -116,24 +116,84 @@ class homePageViewController: UIViewController,CLLocationManagerDelegate {
         json = json![cleanEmail] as? [String: Any]
         numFriends = json!["friend_count"] as! Int
         
-        var pins:[MKPointAnnotation] = []
-        var distances:[Int] = []
-        var names:[String] = []
-        var subtitles:[String] = []
+        var pins = Array(repeating: MKPointAnnotation(), count: numFriends)
+        var emails = Array(repeating: "", count: numFriends)
+        var titles = Array(repeating: "", count: numFriends)
+        var subtitles = Array(repeating: "", count: numFriends)
+        var coordinates = Array(repeating: CLLocation(), count: numFriends)
+        var otherCoordinates = Array(repeating: CLLocationCoordinate2DMake(0.0,0.0), count: numFriends)
+        
+        var j = 0
+        while (j < numFriends) //get emails
+        {
+            var json: [String: Any]?
+            json = readFirebase(urlstring: "friends_list.json")
+            json = json![cleanEmail] as? [String: Any]
+            let k = "friend" + String(j)
+            print(k)
+            emails[j] = json![k] as! String //will fail if json![k] isnt a string
+            print(emails[j])
+            j = j+1
+            
+        }
+        
+        
+        
+        var t = 0
+        while (t < numFriends) //set pin titles
+        {
+            var json: [String: Any]?
+            json = readFirebase(urlstring: "users.json")
+            json = json![emails[t]] as? [String: Any]
+            titles[t] = json!["name"] as! String
+            //print(pins[t].title)
+            t = t+1
+            
+        }
+        var i = 0
+        while (i < numFriends) //get pin coordinates
+        {
+            var json: [String: Any]?
+            json = readFirebase(urlstring: "gps_location.json")
+            json = json![emails[i]] as? [String: Any]
+            
+            let lat = json!["latitude"] as! Double
+            print(lat)
+            let long = json!["longitude"] as! Double
+            print(long)
+            coordinates[i] = CLLocation(latitude: lat, longitude:long)
+            otherCoordinates[i] = CLLocationCoordinate2DMake(lat, long)
+            
+            i = i+1
+        }
+        
+        
         
         var a = 0
-        while (a < numFriends)
+        while (a < numFriends) //calculate distances and set subtitle
         {
-            //get friend[a] coordinate
-            //let names[a] = friends name
-            //let distances[a] = friend[a].distance(from: Mycoordinate)/1609
-            //let subtitles[a] = first + String(format: "%0.2f", distances[a]) + "mi"
-            //let pins[a].coordinate = gotten coordinate
-            //let pins[a].title = names[a]
-            //let pins[a].subtitle = subtitles[a]
-            //Map.addAnnotation(pins[a])
+            
+            
+            let distance = coordinates[a].distance(from: Mycoordinate)/1609
+            print(distance)
+            let val = first + String(format: "%0.2f", distance) + "mi"
+            subtitles[a] = val
+            print (val)
             a = a+1
             
+        }
+        
+        var z = 0
+        while (z < numFriends) //add all annotations
+        {
+            pins[z].coordinate = otherCoordinates[z]
+            pins[z].title = titles[z]
+            print(pins[z].title)
+            pins[z].subtitle = subtitles[z]
+            print(pins[z].subtitle)
+            Map.addAnnotation(pins[z])
+            z = z+1
+
         }
         print("Im here")
     }
