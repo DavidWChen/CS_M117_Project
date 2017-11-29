@@ -13,9 +13,31 @@ class myProfileViewController: UIViewController, UITableViewDelegate, UITableVie
     var thisUser: GIDGoogleUser?
     @IBOutlet weak var myUsername: UILabel!
     @IBOutlet weak var friendsList: UITableView!
+    @IBOutlet weak var userInterests: UITextView!
     
     var cleanEmail: String?
     var numfriends = -1
+    
+    func readFirebase(urlstring: String) -> [String: Any] {
+        var json: [String: Any]?
+        var done1 = false
+        let urlRequest = URLRequest(url: URL(string: "https://fir-cast-me.firebaseio.com/" + urlstring)!)
+        let task = URLSession.shared.dataTask(with: urlRequest, completionHandler: {
+            (data, response, error) in
+            let responseData = data
+            do {
+                if let todoJSON = try JSONSerialization.jsonObject(with: responseData!, options: []) as? [String: Any]{
+                    json = todoJSON
+                }
+            } catch {
+                print("error")
+                return
+            }
+            done1 = true
+        }).resume()
+        while(!done1){}
+        return json!
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -27,6 +49,7 @@ class myProfileViewController: UIViewController, UITableViewDelegate, UITableVie
         cleanEmail = (thisUser?.profile.email)?.replacingOccurrences(of: ".", with: ",")
         friendsList.delegate = self
         friendsList.dataSource = self
+        userInterests.isEditable = false
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -37,64 +60,15 @@ class myProfileViewController: UIViewController, UITableViewDelegate, UITableVie
         let plsemail : String = cleanEmail!
         var friend_email = ""
         
-        var done1 = false
-        let url = URL(string: "https://fir-cast-me.firebaseio.com/friends_list/"+plsemail+".json")
-        let urlRequest = URLRequest(url: url!)
-        let session = URLSession.shared
-        let task = session.dataTask(with: urlRequest, completionHandler: {
-            (data, response, error) in
-            guard let responseData = data else {
-                print("Error: did not receive data")
-                return
-            }
-            do {
-                if let todoJSON = try JSONSerialization.jsonObject(with: responseData, options: []) as? [String: Any]{
-                    //print(todoJSON)
-                    friend_email = todoJSON["friend"+String(indexPath.row)] as! String
-                    new_friend_email = friend_email
-                    new_friend_email = new_friend_email.replacingOccurrences(of: ",", with: ".")
-                    done1 = true
-                } else {
-                    print("error")
-                }
-            } catch {
-                print("error")
-                return
-            }
-        })
-        task.resume()
-        while(!done1){
-            
-        }
+        var json: [String: Any]?
+        json = readFirebase(urlstring: "friends_list/"+plsemail+".json")
+        friend_email = json!["friend"+String(indexPath.row)] as! String
+        new_friend_email = friend_email
+        new_friend_email = new_friend_email.replacingOccurrences(of: ",", with: ".")
         
-        var done2 = false
-        var name = ""
-        let url2 = URL(string: "https://fir-cast-me.firebaseio.com/users/"+friend_email+".json")
-        let urlRequest2 = URLRequest(url: url2!)
-        let session2 = URLSession.shared
-        let task2 = session2.dataTask(with: urlRequest2, completionHandler: {
-            (data, response, error) in
-            guard let responseData = data else {
-                print("Error: did not receive data")
-                return
-            }
-            do {
-                if let todoJSON = try JSONSerialization.jsonObject(with: responseData, options: []) as? [String: Any]{
-                    //print(todoJSON)
-                    name = todoJSON["name"] as! String
-                    done2 = true
-                } else {
-                    print("error")
-                }
-            } catch {
-                print("error")
-                return
-            }
-        })
-        task2.resume()
-        while(!done2){
-            
-        }
+        var json2: [String: Any]?
+        json2 = readFirebase(urlstring: "users/"+friend_email+".json")
+        var name = json2!["name"] as! String
         
         print("friendo: " + new_friend_email)
         print(indexPath.row)
@@ -113,33 +87,10 @@ class myProfileViewController: UIViewController, UITableViewDelegate, UITableVie
         
         let plsemail : String = cleanEmail!
         
-        var done = false
-        let url = URL(string: "https://fir-cast-me.firebaseio.com/friends_list/"+plsemail+".json")
-        let urlRequest = URLRequest(url: url!)
-        let session = URLSession.shared
-        let task = session.dataTask(with: urlRequest, completionHandler: {
-            (data, response, error) in
-            guard let responseData = data else {
-                print("Error: did not receive data")
-                return
-            }
-            do {
-                if let todoJSON = try JSONSerialization.jsonObject(with: responseData, options: []) as? [String: Any]{
-                    //print(todoJSON)
-                    self.numfriends = todoJSON["friend_count"] as! Int
-                    done = true
-                } else {
-                    print("error")
-                }
-            } catch {
-                print("error")
-                return
-            }
-        })
-        task.resume()
-        while(!done){
-            
-        }
+        var json: [String: Any]?
+        json = readFirebase(urlstring: "friends_list/"+plsemail+".json")
+        self.numfriends = json!["friend_count"] as! Int
+        
         print(numfriends)
         return numfriends
     }

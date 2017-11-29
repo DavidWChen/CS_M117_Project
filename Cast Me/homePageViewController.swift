@@ -51,8 +51,8 @@ class homePageViewController: UIViewController,CLLocationManagerDelegate {
         let span:MKCoordinateSpan = MKCoordinateSpanMake(0.04, 0.04)
         
         let myLocation:CLLocationCoordinate2D = CLLocationCoordinate2DMake(location.coordinate.latitude, location.coordinate.longitude)
-        user_latitude = location.coordinate.latitude as? Double
-        user_longitude = location.coordinate.longitude as? Double
+        user_latitude = location.coordinate.latitude
+        user_longitude = location.coordinate.longitude
         let useremail = (thisUser?.profile.email)!
         let cleanEmail = useremail.replacingOccurrences(of: ".", with: ",")
         ref.child("gps_location/" + cleanEmail + "/latitude").setValue(user_latitude)
@@ -154,27 +154,15 @@ class homePageViewController: UIViewController,CLLocationManagerDelegate {
         
         let cleanEmail = useremail.replacingOccurrences(of: ".", with: ",")
         
-        var done1 = false
-        let urlRequest = URLRequest(url: URL(string: "https://fir-cast-me.firebaseio.com/users.json")!)
-        URLSession.shared.dataTask(with: urlRequest, completionHandler: {
-            (data, response, error) in
-            do {
-                if let todoJSON = try JSONSerialization.jsonObject(with: data!, options: []) as? [String: Any]{
-                    if let user = try todoJSON[cleanEmail] as? [String: Any] {
-                        done1 = true
-                    } else {
-                        self.ref.child("users/" + cleanEmail + "/name").setValue(username)
-                        self.ref.child("gps_location/" + cleanEmail + "/location1").setValue(0)
-                        self.ref.child("friends_list/" + cleanEmail + "/friend_count").setValue(0)
-                        self.ref.child("user_interests/" + cleanEmail + "/interests").setValue(0)
-                        done1 = true
-                    }
-                }
-            } catch {
-                print("error")
-            }
-        }).resume()
-        while(!done1){}
+        var json: [String: Any]?
+        json = readFirebase(urlstring: "users.json")
+        if (try json![cleanEmail] as? [String: Any]) == nil {
+            self.ref.child("users/" + cleanEmail + "/name").setValue(username)
+            self.ref.child("gps_location/" + cleanEmail + "/location1").setValue(0)
+            self.ref.child("friends_list/" + cleanEmail + "/friend_count").setValue(0)
+            self.ref.child("user_interests/" + cleanEmail + "/interests").setValue(0)
+        }
+        
     }
     
     
