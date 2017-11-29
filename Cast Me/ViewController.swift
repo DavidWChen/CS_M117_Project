@@ -20,6 +20,7 @@ class ViewController: UIViewController, GIDSignInDelegate, GIDSignInUIDelegate {
     @IBOutlet weak var emailText: UITextField!
     @IBOutlet weak var passwordText: UITextField!
     @IBOutlet weak var confirmText: UITextField!
+    @IBOutlet weak var nextButton: UIButton!
     
     @IBOutlet weak var signInButton: GIDSignInButton!
     
@@ -63,6 +64,8 @@ class ViewController: UIViewController, GIDSignInDelegate, GIDSignInUIDelegate {
             GIDSignIn.sharedInstance().signOut()
         }
         
+        nextButton.isEnabled = false
+        
     }
     
     //when the signin complets
@@ -75,6 +78,7 @@ class ViewController: UIViewController, GIDSignInDelegate, GIDSignInUIDelegate {
         }
         
         thisUser = user
+        nextButton.isEnabled = true
         print("Sign in successful")
     }
     

@@ -94,6 +94,7 @@
                         <outlet property="email" destination="lgF-3P-eRz" id="s65-ij-6aa"/>
                         <outlet property="emailText" destination="Rcw-Ff-lB1" id="Z5c-Q3-OYy"/>
                         <outlet property="nameText" destination="qxW-GU-JWl" id="OXn-7u-v67"/>
+                        <outlet property="nextButton" destination="MVu-ba-HwM" id="syu-NP-cd5"/>
                         <outlet property="password" destination="hlF-jj-LSO" id="meG-YP-FD1"/>
                         <outlet property="passwordText" destination="FKU-hY-qUa" id="GsJ-fj-luz"/>
                     </connections>
@@ -551,10 +552,9 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="ucd-OM-S5F"/>
         <segue reference="1fZ-tA-e3h"/>
         <segue reference="swM-Y9-ynn"/>
         <segue reference="n1n-bf-QVI"/>
-        <segue reference="UMO-xZ-cLU"/>
+        <segue reference="miJ-ns-Ou0"/>
     </inferredMetricsTieBreakers>
 </document>
