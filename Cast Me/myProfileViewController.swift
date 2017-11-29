@@ -49,6 +49,23 @@ class myProfileViewController: UIViewController, UITableViewDelegate, UITableVie
         cleanEmail = (thisUser?.profile.email)?.replacingOccurrences(of: ".", with: ",")
         friendsList.delegate = self
         friendsList.dataSource = self
+        
+        let plsemail : String = cleanEmail!
+        var my_interests = ""
+        var num_interests = 0
+        var json : [String: Any]?
+        json = readFirebase(urlstring: "user_interests/"+plsemail+".json")
+        print(json)
+        //while(json == nil){}
+        //json = json![plsemail] as? [String: Any]
+        num_interests = json!["interests"] as! Int
+        for i in 0 ... (num_interests-1) {
+            my_interests += json!["interest"+String(i)] as! String
+            if i != num_interests-1 {
+                my_interests += ", "
+            }
+        }
+        userInterests.text = my_interests
         userInterests.isEditable = false
     }
     

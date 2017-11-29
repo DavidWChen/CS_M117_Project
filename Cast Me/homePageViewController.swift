@@ -116,6 +116,11 @@ class homePageViewController: UIViewController,CLLocationManagerDelegate {
         json = json![cleanEmail] as? [String: Any]
         numFriends = json!["friend_count"] as! Int
         
+        var pins:[MKPointAnnotation] = []
+        var distances:[Int] = []
+        var names:[String] = []
+        var subtitles:[String] = []
+        
         var a = 0
         while (a < numFriends)
         {
