@@ -23,6 +23,27 @@ class homePageViewController: UIViewController,CLLocationManagerDelegate {
     var user_longitude: Double?
     
     let manager = CLLocationManager()
+    
+    func readFirebase(urlstring: String) -> [String: Any] {
+        var json: [String: Any]?
+        var done1 = false
+        let urlRequest = URLRequest(url: URL(string: "https://fir-cast-me.firebaseio.com/" + urlstring)!)
+        let task = URLSession.shared.dataTask(with: urlRequest, completionHandler: {
+            (data, response, error) in
+            let responseData = data
+            do {
+                if let todoJSON = try JSONSerialization.jsonObject(with: responseData!, options: []) as? [String: Any]{
+                    json = todoJSON
+                }
+            } catch {
+                print("error")
+                return
+            }
+            done1 = true
+        }).resume()
+        while(!done1){}
+        return json!
+    }
 
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation])
     {
@@ -90,24 +111,10 @@ class homePageViewController: UIViewController,CLLocationManagerDelegate {
          */
 
         var numFriends = 0
-        var done1 = false
-        let urlRequest = URLRequest(url: URL(string: "https://fir-cast-me.firebaseio.com/friends_list.json")!)
-        let task = URLSession.shared.dataTask(with: urlRequest, completionHandler: {
-            (data, response, error) in
-            let responseData = data
-            do {
-                if let todoJSON = try JSONSerialization.jsonObject(with: responseData!, options: []) as? [String: Any]{
-                    if let user = try todoJSON[cleanEmail] as? [String: Any] {
-                        numFriends = user["friend_count"] as! Int
-                    }
-                }
-            } catch {
-                print("error")
-                return
-            }
-            done1 = true
-        }).resume()
-        while(!done1){}
+        var json: [String: Any]?
+        json = readFirebase(urlstring: "friends_list.json")
+        json = json![cleanEmail] as? [String: Any]
+        numFriends = json!["friend_count"] as! Int
         
         var a = 0
         while (a < numFriends)
