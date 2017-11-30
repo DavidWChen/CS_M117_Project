@@ -13,13 +13,9 @@ import GoogleSignIn
 class ViewController: UIViewController, GIDSignInDelegate, GIDSignInUIDelegate {
 
     @IBOutlet weak var Name: UILabel!
-    @IBOutlet weak var email: UILabel!
-    @IBOutlet weak var password: UILabel!
-    @IBOutlet weak var confirm: UILabel!
-    @IBOutlet weak var nameText: UITextField!
-    @IBOutlet weak var emailText: UITextField!
-    @IBOutlet weak var passwordText: UITextField!
-    @IBOutlet weak var confirmText: UITextField!
+    @IBOutlet var castMe: UIView!
+    
+    @IBOutlet var signIn: UIView!
     @IBOutlet weak var nextButton: UIButton!
     
     @IBOutlet weak var signInButton: GIDSignInButton!

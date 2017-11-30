@@ -81,7 +81,7 @@ class homePageViewController: UIViewController,CLLocationManagerDelegate {
         
         Map.addAnnotation(annotation)
         
-        let JohnsCoordinate = CLLocation(latitude: 37.7749, longitude:-122.4194)
+        /*let JohnsCoordinate = CLLocation(latitude: 37.7749, longitude:-122.4194)
         let JohnsLocation:CLLocationCoordinate2D = CLLocationCoordinate2DMake(37.7749, -122.4194)
 
         
@@ -97,18 +97,8 @@ class homePageViewController: UIViewController,CLLocationManagerDelegate {
         annotation1.subtitle = Johnssubtitle
         
         
-        Map.addAnnotation(annotation1)
+        Map.addAnnotation(annotation1)*/
         
-        /*  pull friend count
-            instantiate array of annotations [friend count]
-                for all my friends
-                    pull their location coordinates
-                            find distance from my coordinates
-                            create an annotation.coordinate given their coordinate
-                            create an annotation.title given their name
-                            calculate distance from me using Mycoordinate
-                            create an annotation.subtitle given their distance from me
-         */
 
         var numFriends = 0
         var json: [String: Any]?
@@ -116,7 +106,7 @@ class homePageViewController: UIViewController,CLLocationManagerDelegate {
         json = json![cleanEmail] as? [String: Any]
         numFriends = json!["friend_count"] as! Int
         
-        var pins = Array(repeating: MKPointAnnotation(), count: numFriends)
+        var pins: [MKPointAnnotation] = []
         var emails = Array(repeating: "", count: numFriends)
         var titles = Array(repeating: "", count: numFriends)
         var subtitles = Array(repeating: "", count: numFriends)
@@ -186,15 +176,17 @@ class homePageViewController: UIViewController,CLLocationManagerDelegate {
         var z = 0
         while (z < numFriends) //add all annotations
         {
-            pins[z].coordinate = otherCoordinates[z]
-            pins[z].title = titles[z]
-            print(pins[z].title)
-            pins[z].subtitle = subtitles[z]
-            print(pins[z].subtitle)
-            Map.addAnnotation(pins[z])
+            let pointAnnotation = MKPointAnnotation()
+            
+            pointAnnotation.coordinate = otherCoordinates[z]
+            pointAnnotation.title = titles[z]
+            pointAnnotation.subtitle = subtitles[z]
+            pins.append(pointAnnotation)
             z = z+1
 
         }
+        Map.addAnnotations(pins)
+       
         print("Im here")
     }
     
