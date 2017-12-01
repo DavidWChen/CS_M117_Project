@@ -13,6 +13,8 @@ class editInterestsViewController: UIViewController, UITableViewDelegate, UITabl
     var thisUser: GIDGoogleUser?
     @IBOutlet weak var interestsList: UITableView!
     
+    var myInterests = Set<String>()
+    
     func readFirebase(urlstring: String) -> [String: Any] {
         var json: [String: Any]?
         var done1 = false
@@ -40,6 +42,27 @@ class editInterestsViewController: UIViewController, UITableViewDelegate, UITabl
         // Do any additional setup after loading the view.
         interestsList.delegate = self
         interestsList.dataSource = self
+        
+        var i = 0
+        let useremail = (thisUser?.profile.email)!
+        let cleanEmail = useremail.replacingOccurrences(of: ".", with: ",")
+        var json: [String: Any]?
+        json = readFirebase(urlstring: "user_interests/"+cleanEmail+".json")
+        var num_interests = 0
+        if json != nil {
+            num_interests = json!.count as! Int
+        }
+        
+        var count = 0
+        while count < num_interests {
+            var some_string = json!["interest"+String(i)] as? String
+            if some_string != nil {
+                count += 1
+                myInterests.insert(some_string as! String)
+            }
+            i += 1
+        }
+        
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -48,6 +71,12 @@ class editInterestsViewController: UIViewController, UITableViewDelegate, UITabl
         json = readFirebase(urlstring: "interests.json")
         var some_interest = json!["interest"+String(indexPath.row)] as! String
         cell.interest.text = some_interest
+        cell.index = indexPath.row
+        if myInterests.contains(some_interest) {
+            cell.yesNo.setTitle("Yes", for: UIControlState.normal)
+        } else {
+            cell.yesNo.setTitle("No", for: UIControlState.normal)
+        }
         return cell
     }
     

@@ -16,6 +16,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     var window: UIWindow?
     
+    var thisUser: GIDGoogleUser?
+    
     //this function is added only
     func application(_ app: UIApplication, open url: URL, options: [UIApplicationOpenURLOptionsKey : Any] = [:]) -> Bool {
         return GIDSignIn.sharedInstance().handle(url as URL!,

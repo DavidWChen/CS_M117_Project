@@ -56,15 +56,32 @@ class myProfileViewController: UIViewController, UITableViewDelegate, UITableVie
         var json : [String: Any]?
         json = readFirebase(urlstring: "user_interests/"+plsemail+".json")
         print(json)
+        print(json!.count)
         //while(json == nil){}
         //json = json![plsemail] as? [String: Any]
-        num_interests = json!["interests"] as! Int
-        for i in 0 ... (num_interests-1) {
+        //num_interests = json!["interests"] as! Int
+        if json != nil {
+            num_interests = json!.count as! Int
+        }
+        var i = 0
+        var count = 0
+        while count < num_interests {
+            var some_string = json!["interest"+String(i)] as? String
+            if some_string != nil {
+                count += 1
+                my_interests += some_string as! String
+                if count != num_interests {
+                    my_interests += ", "
+                }
+            }
+            i += 1
+        }
+        /*for i in 0 ... (num_interests-1) {
             my_interests += json!["interest"+String(i)] as! String
             if i != num_interests-1 {
                 my_interests += ", "
             }
-        }
+        }*/
         userInterests.text = my_interests
         userInterests.isEditable = false
     }
