@@ -76,6 +76,9 @@ class ViewController: UIViewController, GIDSignInDelegate, GIDSignInUIDelegate {
         thisUser = user
         nextButton.isEnabled = true
         print("Sign in successful")
+        
+        var appDelegate = UIApplication.shared.delegate as! AppDelegate
+        appDelegate.thisUser = user
     }
     
     override func viewDidAppear(_ animated: Bool) {
