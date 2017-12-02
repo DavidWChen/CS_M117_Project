@@ -100,7 +100,7 @@
             <objects>
                 <navigationController id="6VX-ck-53O" sceneMemberID="viewController">
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="Dra-cr-Qyy">
-                        <rect key="frame" x="0.0" y="20" width="375" height="44"/>
+                        <rect key="frame" x="0.0" y="20" width="375" height="48"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <connections>
@@ -529,9 +529,9 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="SC4-8n-4vs"/>
-        <segue reference="swM-Y9-ynn"/>
-        <segue reference="n1n-bf-QVI"/>
+        <segue reference="1fZ-tA-e3h"/>
+        <segue reference="dyX-rc-KCv"/>
+        <segue reference="jUb-d4-fzi"/>
         <segue reference="miJ-ns-Ou0"/>
     </inferredMetricsTieBreakers>
 </document>
