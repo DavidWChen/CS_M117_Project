@@ -7,11 +7,14 @@
 //
 
 import UIKit
+import Firebase
 
-class editInterestsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+class editInterestsViewController: UIViewController, UITextFieldDelegate, UITableViewDelegate, UITableViewDataSource {
     
     var thisUser: GIDGoogleUser?
     @IBOutlet weak var interestsList: UITableView!
+    @IBOutlet weak var interestTextField: UITextField!
+    let ref = FIRDatabase.database().reference()
     
     var myInterests = Set<String>()
     
@@ -42,6 +45,7 @@ class editInterestsViewController: UIViewController, UITableViewDelegate, UITabl
         // Do any additional setup after loading the view.
         interestsList.delegate = self
         interestsList.dataSource = self
+        interestTextField.delegate = self
         
         var i = 0
         let useremail = (thisUser?.profile.email)!
@@ -65,6 +69,32 @@ class editInterestsViewController: UIViewController, UITableViewDelegate, UITabl
         
     }
     
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        // Hide the keyboard.
+        textField.resignFirstResponder()
+        return true
+    }
+    
+    func textFieldDidEndEditing(_ textField: UITextField) {
+        var json: [String: Any]?
+        json = readFirebase(urlstring: "interests.json")
+        var num_interests = json!.count
+        ref.child("interests/interest" + String(num_interests)).setValue(interestTextField.text as! String)
+        let useremail = (thisUser?.profile.email)!
+        let cleanEmail = useremail.replacingOccurrences(of: ".", with: ",")
+        //ref.child("user_interests/" + cleanEmail + "/interest" + String(num_interests)).setValue(interestTextField.text as! String)
+        interestsList.beginUpdates()
+        interestsList.insertRows(at: [
+            NSIndexPath(row: num_interests-1, section: 0) as IndexPath
+            ], with: .automatic)
+        interestsList.reloadData()
+        interestsList.endUpdates()
+        
+        print(textField.text as! String)
+        print("num rows in section: " + String(interestsList.numberOfRows(inSection: 0)))
+        interestTextField.text = ""
+    }
+    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell : InterestTableViewCell = tableView.dequeueReusableCell(withIdentifier: "InterestTableViewCell", for: indexPath as IndexPath) as! InterestTableViewCell
         var json: [String: Any]?
@@ -77,6 +107,7 @@ class editInterestsViewController: UIViewController, UITableViewDelegate, UITabl
         } else {
             cell.yesNo.setTitle("No", for: UIControlState.normal)
         }
+        print("row: " + String(indexPath.row))
         return cell
     }
     
@@ -88,13 +119,15 @@ class editInterestsViewController: UIViewController, UITableViewDelegate, UITabl
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         var json: [String: Any]?
         json = readFirebase(urlstring: "interests.json")
-        let num_interests = json!["interests"] as! Int
-        print("edit_interests "+String(num_interests))
+        //let num_interests = json!["interests"] as! Int
+        let num_interests = json!.count
+        print("rows in section: "+String(num_interests))
         return num_interests
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         // Create a new variable to store the instance of PlayerTableViewController
+        
         
         if let destination = segue.destination as? myProfileViewController {
             destination.thisUser = thisUser
