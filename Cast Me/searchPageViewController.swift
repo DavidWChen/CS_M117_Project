@@ -72,7 +72,7 @@ import UIKit
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("Cell") as! UITableViewCell;
+        let cell = tableView.dequeueReusableCell(withIdentifier: "Cell") as! UITableViewCell;
         if(searchActive){
             cell.textLabel?.text = filtered[indexPath.row]
         } else {
