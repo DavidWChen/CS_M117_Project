@@ -17,6 +17,7 @@ class messageViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.connect()
 
         // Do any additional setup after loading the view.
     }
@@ -31,6 +32,30 @@ class messageViewController: UIViewController {
                 return
             }
         })
+        let query = SBDOpenChannel.createOpenChannelListQuery()!
+        query.loadNextPage(completionHandler: { (channels, error) in
+            if error != nil {
+                NSLog("Error: %@", error!)
+                return
+            }
+            
+            // ...
+        })
+        SBDOpenChannel.getWithUrl("Chat") { (channel, error) in
+            if error != nil {
+                NSLog("Error: %@", error!)
+                return
+            }
+            
+            channel?.enter(completionHandler: { (error) in
+                if error != nil {
+                    NSLog("Error: %@", error!)
+                    return
+                }
+                
+                // ...https://docs.sendbird.com/ios#open_channel
+            })
+        }
     }
 
     /*
