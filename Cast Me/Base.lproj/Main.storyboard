@@ -414,6 +414,36 @@
             </objects>
             <point key="canvasLocation" x="1968.8" y="926.98650674662679"/>
         </scene>
+        <!--Inbox View Controller-->
+        <scene sceneID="Peu-4K-ogq">
+            <objects>
+                <viewController id="GoS-6a-qqg" customClass="inboxViewController" customModule="Cast_Me" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="Hty-Lr-OtN">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <viewLayoutGuide key="safeArea" id="MGh-xo-xaW"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="l9g-dn-DBM" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2985" y="937"/>
+        </scene>
+        <!--Message View Controller-->
+        <scene sceneID="pSp-rO-uwq">
+            <objects>
+                <viewController id="gZt-cF-at1" customClass="messageViewController" customModule="Cast_Me" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="k2N-hV-m41">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <viewLayoutGuide key="safeArea" id="b2g-zE-YGz"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="yv8-SC-h1s" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2966" y="1649"/>
+        </scene>
         <!--Search Page-->
         <scene sceneID="WH2-cq-Rrl">
             <objects>
@@ -553,9 +583,9 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="SC4-8n-4vs"/>
+        <segue reference="1fZ-tA-e3h"/>
         <segue reference="swM-Y9-ynn"/>
-        <segue reference="n1n-bf-QVI"/>
-        <segue reference="oRz-0I-VxO"/>
+        <segue reference="jUb-d4-fzi"/>
+        <segue reference="miJ-ns-Ou0"/>
     </inferredMetricsTieBreakers>
 </document>
