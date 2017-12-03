@@ -42,11 +42,13 @@ PODS:
   - GTMSessionFetcher/Core (1.1.12)
   - GTMSessionFetcher/Full (1.1.12):
     - GTMSessionFetcher/Core (= 1.1.12)
+  - SendBirdSDK (3.0.74)
 
 DEPENDENCIES:
   - Firebase/Core (~> 3.15)
   - Firebase/Database
   - Google/SignIn (~> 3.0.3)
+  - SendBirdSDK
 
 SPEC CHECKSUMS:
   Firebase: 4b66b5b59c43edac745b87f0c87e42cdd0279c13
@@ -59,7 +61,8 @@ SPEC CHECKSUMS:
   GoogleToolboxForMac: 2501e2ad72a52eb3dfe7bd9aee7dad11b858bd20
   GTMOAuth2: be83fd28d63ae3087e7d351b1f39c1a7e24ab6e7
   GTMSessionFetcher: ebaa1f79a5366922c1735f1566901f50beba23b7
+  SendBirdSDK: 1677c5c51e4c9e287fb1d086233cfb733eded089
 
-PODFILE CHECKSUM: 1a82a0b6aadd7a9d0714415d1a5db62f75e45db9
+PODFILE CHECKSUM: 3622e1b8feed8cd95aa30d250504bec6692bfcf6
 
 COCOAPODS: 1.3.1

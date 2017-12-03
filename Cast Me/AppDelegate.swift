@@ -10,6 +10,7 @@ import UIKit
 import Google
 import GoogleSignIn
 import Firebase
+import SendBirdSDK
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -18,6 +19,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     var thisUser: GIDGoogleUser?
     
+    
+    
     //this function is added only
     func application(_ app: UIApplication, open url: URL, options: [UIApplicationOpenURLOptionsKey : Any] = [:]) -> Bool {
         return GIDSignIn.sharedInstance().handle(url as URL!,
@@ -25,6 +28,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
+        SBDMain.initWithApplicationId("6EEE8AB8-70F7-477F-9339-FF22CE400C2A")
         // Override point for customization after application launch.
         FIRApp.configure()
         

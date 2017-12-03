@@ -24,10 +24,11 @@
 		64F92F1F1FBA495800D84C46 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 64F92F1D1FBA495800D84C46 /* Main.storyboard */; };
 		64F92F211FBA495800D84C46 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 64F92F201FBA495800D84C46 /* Assets.xcassets */; };
 		64F92F241FBA495800D84C46 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 64F92F221FBA495800D84C46 /* LaunchScreen.storyboard */; };
-		928BD7896F241DBF2A2C5FA5 /* libPods-Cast Me.a in Frameworks */ = {isa = PBXBuildFile; fileRef = DE3A1234C2AC92D0CA94E083 /* libPods-Cast Me.a */; };
+		8B8378888F974FA8CAE200F6 /* Pods_Cast_Me.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 16752FB13FBDFC572F57C95D /* Pods_Cast_Me.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		16752FB13FBDFC572F57C95D /* Pods_Cast_Me.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Cast_Me.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		361ABB541FD28FF7006C8CCA /* inboxViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = inboxViewController.swift; sourceTree = "<group>"; };
 		361ABB561FD2921A006C8CCA /* messageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = messageViewController.swift; sourceTree = "<group>"; };
 		36B8ACD21FC2C2B600FAE992 /* homePageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = homePageViewController.swift; sourceTree = "<group>"; };
@@ -50,7 +51,6 @@
 		64F92F201FBA495800D84C46 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		64F92F231FBA495800D84C46 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		64F92F251FBA495800D84C46 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		DE3A1234C2AC92D0CA94E083 /* libPods-Cast Me.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Cast Me.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -59,7 +59,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				36B8ACE01FC3952E00FAE992 /* CoreLocation.framework in Frameworks */,
-				928BD7896F241DBF2A2C5FA5 /* libPods-Cast Me.a in Frameworks */,
+				8B8378888F974FA8CAE200F6 /* Pods_Cast_Me.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -122,7 +122,7 @@
 			isa = PBXGroup;
 			children = (
 				36B8ACDF1FC3952200FAE992 /* CoreLocation.framework */,
-				DE3A1234C2AC92D0CA94E083 /* libPods-Cast Me.a */,
+				16752FB13FBDFC572F57C95D /* Pods_Cast_Me.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -206,9 +206,20 @@
 			files = (
 			);
 			inputPaths = (
+				"${SRCROOT}/Pods/Target Support Files/Pods-Cast Me/Pods-Cast Me-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/GTMOAuth2/GTMOAuth2.framework",
+				"${BUILT_PRODUCTS_DIR}/GTMSessionFetcher/GTMSessionFetcher.framework",
+				"${BUILT_PRODUCTS_DIR}/GoogleToolboxForMac/GoogleToolboxForMac.framework",
+				"${PODS_ROOT}/SendBirdSDK/SendBirdSDK.framework",
+				"${PODS_ROOT}/SendBirdSDK/SendBirdSDK.framework.dSYM",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GTMOAuth2.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GTMSessionFetcher.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleToolboxForMac.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SendBirdSDK.framework",
+				"${DWARF_DSYM_FOLDER_PATH}/SendBirdSDK.framework.dSYM",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -222,7 +233,6 @@
 			);
 			inputPaths = (
 				"${SRCROOT}/Pods/Target Support Files/Pods-Cast Me/Pods-Cast Me-resources.sh",
-				"${PODS_ROOT}/GTMOAuth2/Source/Touch/GTMOAuth2ViewTouch.xib",
 				"${PODS_ROOT}/GoogleSignIn/Resources/GoogleSignIn.bundle",
 			);
 			name = "[CP] Copy Pods Resources";

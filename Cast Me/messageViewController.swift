@@ -7,8 +7,13 @@
 //
 
 import UIKit
+import SendBirdSDK  // Swift
+import Firebase
+
 
 class messageViewController: UIViewController {
+    var thisUser: GIDGoogleUser?
+    var ref: FIRDatabaseReference?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -20,7 +25,13 @@ class messageViewController: UIViewController {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-    
+    func connect(){
+        SBDMain.connect(withUserId: (thisUser?.profile.email)!, completionHandler: { (user, error) in
+            if error != nil {
+                return
+            }
+        })
+    }
 
     /*
     // MARK: - Navigation
