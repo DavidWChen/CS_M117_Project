@@ -19,12 +19,7 @@ class messageViewController: JSQMessagesViewController {
     var channel_id: String?
     var friendnum: Int?
     var friend_email: String?
-    //var channelRef: DatabaseReference?
-    /*var channel: Channel? {
-        didSet {
-            title = channel?.name
-        }
-    }*/
+    
     
     func readFirebase(urlstring: String) -> [String: Any] {
         var json: [String: Any]?
@@ -72,6 +67,36 @@ class messageViewController: JSQMessagesViewController {
         button.addTarget(self, action: #selector(buttonAction), for: UIControlEvents.touchUpInside)
         
         self.view.addSubview(button)
+        Timer.scheduledTimer(timeInterval: 2, target: self, selector: #selector(observeee), userInfo: nil, repeats: true)
+    }
+    
+    @objc func observeee() {
+        print("observing")
+        messages = [JSQMessage]()
+        var json: [String: Any]?
+        json = readFirebase(urlstring: "messages/"+channel_id!+".json")
+        var num_messages = json!.count
+        print(num_messages)
+        
+        var count = num_messages - 50
+        if count < 1 {
+            count = 1
+        }
+        while count < num_messages {
+            let messageData = json!["msg"+String(count)] as! [String: Any]
+            let id = messageData["senderId"] as! String
+            let name = messageData["senderName"] as! String
+            let text = messageData["text"] as! String
+            
+            self.addMessage(withId: id, name: name, text: text)
+            count += 1
+        }
+        self.finishReceivingMessage()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        observeMessages()
     }
     
     @objc func buttonAction(sender: UIButton!) {
@@ -113,27 +138,6 @@ class messageViewController: JSQMessagesViewController {
         }
     }
     
-    /*
-     {
-     "channels": {
-        "name": "Channel 1"
-            "messages": {
-                "1": {
-                    "text": "Hey person!",
-                    "senderName": "Alice"
-                    "senderId": "foo"
-                },
-                "2": {
-                    "text": "Yo!",
-                    "senderName": "Bob"
-                    "senderId": "bar"
-                }
-            }
-        }
-     }
-     */
-    //private lazy var messageRef: DatabaseReference = self.channelRef!.child("messages")
-    //private var newMessageRefHandle: DatabaseHandle?
     
     override func didPressSend(_ button: UIButton!, withMessageText text: String!, senderId: String!, senderDisplayName: String?, date: Date!) {
         //let itemRef = messageRef.childByAutoId() // 1
@@ -162,10 +166,32 @@ class messageViewController: JSQMessagesViewController {
         }
     }
     
+    
     private func observeMessages() {
+        messages = [JSQMessage]()
+        var json: [String: Any]?
+        json = readFirebase(urlstring: "messages/"+channel_id!+".json")
+        var num_messages = json!.count
+        
+        var count = num_messages - 50
+        if count < 1 {
+            count = 1
+        }
+        while count < num_messages {
+            let messageData = json!["msg"+String(count)] as! [String: Any]
+            let id = messageData["senderId"] as! String
+            let name = messageData["senderName"] as! String
+            let text = messageData["text"] as! String
+            
+            self.addMessage(withId: id, name: name, text: text)
+            count += 1
+        }
+        //self.finishReceivingMessage()
+
+        /*
         //messageRef = channelRef!.child("messages")
         // 1.
-        var newMsgRef = ref?.child("messages").child(channel_id!)
+        let newMsgRef = ref?.child("messages/"+channel_id!)//.child(channel_id!)
         let messageQuery = newMsgRef?.queryLimited(toLast:25)
         
         // 2. We can use the observe method to listen for new
@@ -188,7 +214,7 @@ class messageViewController: JSQMessagesViewController {
                 self.addMessage(withId: id, name: name, text: text)
                 self.finishReceivingMessage()
             }
-        })
+        })*/
     }
 
     override func didReceiveMemoryWarning() {
