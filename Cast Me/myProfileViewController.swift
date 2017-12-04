@@ -22,7 +22,7 @@ class myProfileViewController: UIViewController, UITableViewDelegate, UITableVie
         var json: [String: Any]?
         var done1 = false
         let urlRequest = URLRequest(url: URL(string: "https://fir-cast-me.firebaseio.com/" + urlstring)!)
-        let task = URLSession.shared.dataTask(with: urlRequest, completionHandler: {
+        URLSession.shared.dataTask(with: urlRequest, completionHandler: {
             (data, response, error) in
             let responseData = data
             do {
@@ -42,7 +42,6 @@ class myProfileViewController: UIViewController, UITableViewDelegate, UITableVie
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Do any additional setup after loading the view.
         if thisUser != nil {
             myUsername.text = thisUser?.profile.name
         }
@@ -55,18 +54,15 @@ class myProfileViewController: UIViewController, UITableViewDelegate, UITableVie
         var num_interests = 0
         var json : [String: Any]?
         json = readFirebase(urlstring: "user_interests/"+plsemail+".json")
-        print(json)
-        print(json!.count)
-        //while(json == nil){}
-        //json = json![plsemail] as? [String: Any]
-        //num_interests = json!["interests"] as! Int
+        
         if json != nil {
-            num_interests = json!.count as! Int
+            num_interests = json!.count - 1
         }
+        
         var i = 0
         var count = 0
         while count < num_interests {
-            var some_string = json!["interest"+String(i)] as? String
+            let some_string = json!["interest"+String(i)] as? String
             if some_string != nil {
                 count += 1
                 my_interests += some_string as! String
@@ -76,12 +72,7 @@ class myProfileViewController: UIViewController, UITableViewDelegate, UITableVie
             }
             i += 1
         }
-        /*for i in 0 ... (num_interests-1) {
-            my_interests += json!["interest"+String(i)] as! String
-            if i != num_interests-1 {
-                my_interests += ", "
-            }
-        }*/
+        
         userInterests.text = my_interests
         userInterests.isEditable = false
     }
@@ -102,7 +93,7 @@ class myProfileViewController: UIViewController, UITableViewDelegate, UITableVie
         
         var json2: [String: Any]?
         json2 = readFirebase(urlstring: "users/"+friend_email+".json")
-        var name = json2!["name"] as! String
+        let name = json2!["name"] as! String
         
         print("friendo: " + new_friend_email)
         print(indexPath.row)
@@ -130,8 +121,6 @@ class myProfileViewController: UIViewController, UITableViewDelegate, UITableVie
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Create a new variable to store the instance of PlayerTableViewController
-        
         if let destination = segue.destination as? homePageViewController {
             destination.thisUser = thisUser
         } else if let destination = segue.destination as? editInterestsViewController {

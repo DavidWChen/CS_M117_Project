@@ -12,16 +12,11 @@ import GoogleSignIn
 
 class ViewController: UIViewController, GIDSignInDelegate, GIDSignInUIDelegate {
 
-    @IBOutlet weak var Name: UILabel!
     @IBOutlet var castMe: UIView!
-    
     @IBOutlet var signIn: UIView!
     @IBOutlet weak var nextButton: UIButton!
     
     @IBOutlet weak var signInButton: GIDSignInButton!
-    
-    //label to display name of logged in user
-    var labelUserEmail = ""
     
     var thisUser: GIDGoogleUser!
     
@@ -29,13 +24,9 @@ class ViewController: UIViewController, GIDSignInDelegate, GIDSignInUIDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        //error object
-        var error : NSError?
-        
-        //setting the error
-        GGLContext.sharedInstance().configureWithError(&error)
-        
         //if any error stop execution and print error
+        var error : NSError?
+        GGLContext.sharedInstance().configureWithError(&error)
         if error != nil{
             print(error ?? "google error")
             return
@@ -53,13 +44,7 @@ class ViewController: UIViewController, GIDSignInDelegate, GIDSignInUIDelegate {
         //googleSignInButton.frame.origin = CGPoint(x: view.center.x, y: view.center.y)
         view.addSubview(googleSignInButton)
         
-        if labelUserEmail == "" {
-            GIDSignIn.sharedInstance().signOut()
-        }
-        
-        if Name == nil {
-            GIDSignIn.sharedInstance().signOut()
-        }
+        GIDSignIn.sharedInstance().signOut()
         
         nextButton.isEnabled = false
         
@@ -78,7 +63,7 @@ class ViewController: UIViewController, GIDSignInDelegate, GIDSignInUIDelegate {
         nextButton.isEnabled = true
         print("Sign in successful")
         
-        var appDelegate = UIApplication.shared.delegate as! AppDelegate
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
         appDelegate.thisUser = user
     }
     
@@ -104,7 +89,7 @@ class ViewController: UIViewController, GIDSignInDelegate, GIDSignInUIDelegate {
     }
 
     @IBAction func nextButtonHome(_ sender: Any) {
-    print("Next button used")
+        print("Next button used")
     }
     
     @IBAction func didTapSignOut(sender: AnyObject) {

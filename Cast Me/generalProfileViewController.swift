@@ -21,7 +21,7 @@ class generalProfileViewController: UIViewController {
         var json: [String: Any]?
         var done1 = false
         let urlRequest = URLRequest(url: URL(string: "https://fir-cast-me.firebaseio.com/" + urlstring)!)
-        let task = URLSession.shared.dataTask(with: urlRequest, completionHandler: {
+        URLSession.shared.dataTask(with: urlRequest, completionHandler: {
             (data, response, error) in
             let responseData = data
             do {
@@ -46,18 +46,18 @@ class generalProfileViewController: UIViewController {
         var json: [String: Any]?
         json = readFirebase(urlstring: "friends_list/" + cleanEmail + ".json")
         print("This is friend # " + String(friendnum!))
-        var friendemail = json!["friend"+String(friendnum!)] as! String
+        let friendemail = json!["friend"+String(friendnum!)] as! String
         
         var json2: [String: Any]?
         json2 = readFirebase(urlstring: "users/" + friendemail + ".json")
-        usernameLabel.text = json2!["name"] as! String
+        usernameLabel.text = (json2!["name"] as! String)
         
         var json3: [String: Any]?
         json3 = readFirebase(urlstring: "gps_location/" + friendemail + ".json")
         print("getting coords now")
         print(json3!)
-        var latitude = json3!["latitude"] as! Double
-        var longitude = json3!["longitude"] as! Double
+        let latitude = json3!["latitude"] as! Double
+        let longitude = json3!["longitude"] as! Double
         print("lat: "+String(latitude)+", long: "+String(longitude))
         userDistance.text = String(describing: latitude) + ", " + String(describing: longitude)
         
@@ -67,12 +67,12 @@ class generalProfileViewController: UIViewController {
         var json4 : [String: Any]?
         json4 = readFirebase(urlstring: "user_interests/"+friendemail+".json")
         if json4 != nil {
-            num_interests = json4!.count as! Int
+            num_interests = json4!.count - 1
         }
         var i = 0
         var count = 0
         while count < num_interests {
-            var some_string = json4!["interest"+String(i)] as? String
+            let some_string = json4!["interest"+String(i)] as? String
             if some_string != nil {
                 count += 1
                 user_interests += some_string as! String

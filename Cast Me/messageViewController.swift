@@ -7,8 +7,10 @@
 //
 
 import UIKit
+import Firebase
+import JSQMessagesViewController
 
-class messageViewController: UIViewController {
+class messageViewController: JSQMessagesViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()

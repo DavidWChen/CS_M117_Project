@@ -22,7 +22,7 @@ class editInterestsViewController: UIViewController, UITextFieldDelegate, UITabl
         var json: [String: Any]?
         var done1 = false
         let urlRequest = URLRequest(url: URL(string: "https://fir-cast-me.firebaseio.com/" + urlstring)!)
-        let task = URLSession.shared.dataTask(with: urlRequest, completionHandler: {
+        URLSession.shared.dataTask(with: urlRequest, completionHandler: {
             (data, response, error) in
             let responseData = data
             do {
@@ -54,12 +54,12 @@ class editInterestsViewController: UIViewController, UITextFieldDelegate, UITabl
         json = readFirebase(urlstring: "user_interests/"+cleanEmail+".json")
         var num_interests = 0
         if json != nil {
-            num_interests = json!.count as! Int
+            num_interests = json!.count - 1
         }
         
         var count = 0
         while count < num_interests {
-            var some_string = json!["interest"+String(i)] as? String
+            let some_string = json!["interest"+String(i)] as? String
             if some_string != nil {
                 count += 1
                 myInterests.insert(some_string as! String)
@@ -78,11 +78,8 @@ class editInterestsViewController: UIViewController, UITextFieldDelegate, UITabl
     func textFieldDidEndEditing(_ textField: UITextField) {
         var json: [String: Any]?
         json = readFirebase(urlstring: "interests.json")
-        var num_interests = json!.count
+        let num_interests = json!.count
         ref.child("interests/interest" + String(num_interests)).setValue(interestTextField.text as! String)
-        let useremail = (thisUser?.profile.email)!
-        let cleanEmail = useremail.replacingOccurrences(of: ".", with: ",")
-        //ref.child("user_interests/" + cleanEmail + "/interest" + String(num_interests)).setValue(interestTextField.text as! String)
         interestsList.beginUpdates()
         interestsList.insertRows(at: [
             NSIndexPath(row: num_interests-1, section: 0) as IndexPath
@@ -99,7 +96,7 @@ class editInterestsViewController: UIViewController, UITextFieldDelegate, UITabl
         let cell : InterestTableViewCell = tableView.dequeueReusableCell(withIdentifier: "InterestTableViewCell", for: indexPath as IndexPath) as! InterestTableViewCell
         var json: [String: Any]?
         json = readFirebase(urlstring: "interests.json")
-        var some_interest = json!["interest"+String(indexPath.row)] as! String
+        let some_interest = json!["interest"+String(indexPath.row)] as! String
         cell.interest.text = some_interest
         cell.index = indexPath.row
         if myInterests.contains(some_interest) {
