@@ -516,7 +516,9 @@
                         <viewLayoutGuide key="safeArea" id="cB5-8l-H9m"/>
                     </view>
                     <connections>
+                        <outlet property="searchBar" destination="D7c-tx-LHj" id="Dd7-sB-cKW"/>
                         <outlet property="searchDisplayController" destination="MXd-4t-iDs" id="uNj-SF-DQO"/>
+                        <outlet property="tableView" destination="pOF-4P-Rft" id="jYY-iA-F4O"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="GGr-LO-6qQ" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -613,10 +615,9 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="9RI-Bz-KB3"/>
         <segue reference="SC4-8n-4vs"/>
         <segue reference="swM-Y9-ynn"/>
         <segue reference="jUb-d4-fzi"/>
-        <segue reference="dOL-OI-QcC"/>
+        <segue reference="oRz-0I-VxO"/>
     </inferredMetricsTieBreakers>
 </document>
