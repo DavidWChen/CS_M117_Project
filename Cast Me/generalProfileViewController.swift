@@ -12,7 +12,9 @@ import Firebase
 class generalProfileViewController: UIViewController {
     
     var thisUser: GIDGoogleUser?
+    var ref: FIRDatabaseReference?
     var friendnum: Int?
+    var friend_email: String?
     @IBOutlet weak var usernameLabel: UILabel!
     @IBOutlet weak var userDistance: UILabel!
     @IBOutlet weak var userInterests: UITextView!
@@ -39,6 +41,7 @@ class generalProfileViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        ref = FIRDatabase.database().reference()
         
         let useremail = (thisUser?.profile.email)!
         let cleanEmail = useremail.replacingOccurrences(of: ".", with: ",")
@@ -47,6 +50,7 @@ class generalProfileViewController: UIViewController {
         json = readFirebase(urlstring: "friends_list/" + cleanEmail + ".json")
         print("This is friend # " + String(friendnum!))
         let friendemail = json!["friend"+String(friendnum!)] as! String
+        friend_email = friendemail
         
         var json2: [String: Any]?
         json2 = readFirebase(urlstring: "users/" + friendemail + ".json")
@@ -93,6 +97,33 @@ class generalProfileViewController: UIViewController {
             destination.thisUser = thisUser
         } else if let destination = segue.destination as? friendsListViewController {
             destination.thisUser = thisUser
+        } else if let destination = segue.destination as? messageViewController {
+            let useremail = (thisUser?.profile.email)!
+            let cleanEmail = useremail.replacingOccurrences(of: ".", with: ",")
+            var json: [String: Any]?
+            json = readFirebase(urlstring: "users.json")
+            var u1 = json![cleanEmail] as! [String: Any]
+            var u1_id = u1["id"] as! String
+            var u2 = json![friend_email!] as! [String: Any]
+            var u2_id = u2["id"] as! String
+            var c_id = ""
+            if (Int(u1_id) as! Int) < (Int(u2_id) as! Int) {
+                c_id = u1_id + u2_id
+            } else {
+                c_id = u2_id + u1_id
+            }
+            
+            let messageItem = [ // 2
+                "senderId": "0",
+                "senderName": "0",
+                "text": "0",
+                ]
+            
+            ref?.child("messages/" + c_id + "/msg0").setValue(messageItem)
+            destination.thisUser = thisUser
+            destination.channel_id = c_id
+            destination.senderDisplayName = u1["name"] as! String
+            print("sent channel " + c_id)
         }
     }
 

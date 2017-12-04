@@ -420,6 +420,9 @@
                                 <rect key="frame" x="156" y="498" width="62" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="Message"/>
+                                <connections>
+                                    <segue destination="gZt-cF-at1" kind="show" id="4g8-LA-SWk"/>
+                                </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" red="0.68177026548184128" green="0.81506793811235212" blue="1" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
@@ -616,7 +619,7 @@
     </scenes>
     <inferredMetricsTieBreakers>
         <segue reference="SC4-8n-4vs"/>
-        <segue reference="swM-Y9-ynn"/>
+        <segue reference="qGl-Ga-etm"/>
         <segue reference="jUb-d4-fzi"/>
         <segue reference="oRz-0I-VxO"/>
     </inferredMetricsTieBreakers>
