@@ -105,9 +105,20 @@ class friendsListViewController: UIViewController, UITableViewDelegate, UITableV
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         // Create a new variable to store the instance of PlayerTableViewController
-        
+        print("HELLO LEAVING NOW")
         if let destination = segue.destination as? generalProfileViewController {
+            print("Going to general profile")
             destination.thisUser = thisUser
+            guard let selectedCell = sender as? UserTableViewCell else {
+                fatalError("Unexpected sender: \(sender)")
+            }
+            
+            guard let indexPath = friendsList.indexPath(for: selectedCell) else {
+                fatalError("The selected cell is not being displayed by the table")
+            }
+            let friendnum = indexPath.row as! Int
+            print("sending friend # " + String(friendnum))
+            destination.friendnum = friendnum
         } else if let destination = segue.destination as? searchPageViewController {
             destination.thisUser = thisUser
         }

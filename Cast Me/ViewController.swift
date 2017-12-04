@@ -48,7 +48,8 @@ class ViewController: UIViewController, GIDSignInDelegate, GIDSignInUIDelegate {
         
         //getting the signin button and adding it to view
         let googleSignInButton = GIDSignInButton()
-        googleSignInButton.center = view.center
+        googleSignInButton.center.x = view.center.x
+        googleSignInButton.center.y = view.center.y + 50
         //googleSignInButton.frame.origin = CGPoint(x: view.center.x, y: view.center.y)
         view.addSubview(googleSignInButton)
         
