@@ -17,6 +17,8 @@ class messageViewController: JSQMessagesViewController {
     var thisUser: GIDGoogleUser?
     var ref: FIRDatabaseReference?
     var channel_id: String?
+    var friendnum: Int?
+    var friend_email: String?
     //var channelRef: DatabaseReference?
     /*var channel: Channel? {
         didSet {
@@ -62,6 +64,27 @@ class messageViewController: JSQMessagesViewController {
         json = readFirebase(urlstring: "users/"+plsemail+".json")
         //print(json)
         self.senderId = json!["id"] as! String
+        
+        let button = UIButton(frame: CGRect(x: 0, y: 20, width: 60, height: 30))
+        button.backgroundColor = .black
+        button.setTitle("Back", for: [])
+        button.titleLabel?.textColor = UIColor.black
+        button.addTarget(self, action: #selector(buttonAction), for: UIControlEvents.touchUpInside)
+        
+        self.view.addSubview(button)
+    }
+    
+    @objc func buttonAction(sender: UIButton!) {
+        print("Button tapped")
+        let svc = generalProfileViewController()
+        svc.thisUser = thisUser
+        svc.friendnum = friendnum
+        svc.friend_email = friend_email
+        svc.modalTransitionStyle = .crossDissolve
+        //present(svc, animated: true, completion: nil)
+        
+        //present(generalProfileViewController(), animated: true, completion: nil)
+        self.performSegue(withIdentifier: "toProfile", sender: self)
     }
     
     override func collectionView(_ collectionView: JSQMessagesCollectionView!, messageDataForItemAt indexPath: IndexPath!) -> JSQMessageData! {
@@ -171,6 +194,14 @@ class messageViewController: JSQMessagesViewController {
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if let destination = segue.destination as? generalProfileViewController {
+            destination.thisUser = thisUser
+            destination.friendnum = friendnum
+            destination.friend_email = friend_email
+        }
     }
     
 

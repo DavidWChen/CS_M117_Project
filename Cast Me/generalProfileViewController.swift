@@ -54,6 +54,8 @@ class generalProfileViewController: UIViewController {
         
         var json2: [String: Any]?
         json2 = readFirebase(urlstring: "users/" + friendemail + ".json")
+        print(friendemail)
+        print(json2)
         usernameLabel.text = (json2!["name"] as! String)
         
         var json3: [String: Any]?
@@ -124,6 +126,8 @@ class generalProfileViewController: UIViewController {
             destination.channel_id = c_id
             destination.senderDisplayName = u1["name"] as! String
             print("sent channel " + c_id)
+            destination.friendnum = friendnum
+            destination.friend_email = friend_email
         }
     }
 
