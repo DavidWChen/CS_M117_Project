@@ -21,7 +21,7 @@ class friendsListViewController: UIViewController, UITableViewDelegate, UITableV
         var json: [String: Any]?
         var done1 = false
         let urlRequest = URLRequest(url: URL(string: "https://fir-cast-me.firebaseio.com/" + urlstring)!)
-        let task = URLSession.shared.dataTask(with: urlRequest, completionHandler: {
+        URLSession.shared.dataTask(with: urlRequest, completionHandler: {
             (data, response, error) in
             let responseData = data
             do {
@@ -48,7 +48,6 @@ class friendsListViewController: UIViewController, UITableViewDelegate, UITableV
         
         print(cleanEmail!)
         let type2 = type(of: cleanEmail!)
-        let plsemail : String = cleanEmail!
         print("'\(cleanEmail!)' of type '\(type2)'")
         
         friendsList.delegate = self
@@ -76,7 +75,7 @@ class friendsListViewController: UIViewController, UITableViewDelegate, UITableV
         
         var json2: [String: Any]?
         json2 = readFirebase(urlstring: "users/"+friend_email+".json")
-        var name = json2!["name"] as! String
+        let name = json2!["name"] as! String
         
         
         print("friendo: " + new_friend_email)
@@ -116,10 +115,12 @@ class friendsListViewController: UIViewController, UITableViewDelegate, UITableV
             guard let indexPath = friendsList.indexPath(for: selectedCell) else {
                 fatalError("The selected cell is not being displayed by the table")
             }
-            let friendnum = indexPath.row as! Int
+            let friendnum = indexPath.row
             print("sending friend # " + String(friendnum))
             destination.friendnum = friendnum
         } else if let destination = segue.destination as? searchPageViewController {
+            destination.thisUser = thisUser
+        } else if let destination = segue.destination as? homePageViewController {
             destination.thisUser = thisUser
         }
     }

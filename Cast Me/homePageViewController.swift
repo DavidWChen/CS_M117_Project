@@ -14,7 +14,6 @@ import Firebase
 
 class homePageViewController: UIViewController,CLLocationManagerDelegate {
 
-    //var userEmail : String?
     var thisUser: GIDGoogleUser?
     let ref = FIRDatabase.database().reference()
     @IBOutlet weak var userName: UIButton!
@@ -28,7 +27,7 @@ class homePageViewController: UIViewController,CLLocationManagerDelegate {
         var json: [String: Any]?
         var done1 = false
         let urlRequest = URLRequest(url: URL(string: "https://fir-cast-me.firebaseio.com/" + urlstring)!)
-        let task = URLSession.shared.dataTask(with: urlRequest, completionHandler: {
+        URLSession.shared.dataTask(with: urlRequest, completionHandler: {
             (data, response, error) in
             let responseData = data
             do {
@@ -194,7 +193,6 @@ class homePageViewController: UIViewController,CLLocationManagerDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        // Do any additional setup after loading the view.
         print("Loaded home view")
         
         manager.delegate = self
@@ -213,11 +211,20 @@ class homePageViewController: UIViewController,CLLocationManagerDelegate {
         
         var json: [String: Any]?
         json = readFirebase(urlstring: "users.json")
-        if (try json![cleanEmail] as? [String: Any]) == nil {
+        if (json![cleanEmail] as? [String: Any]) == nil {
             self.ref.child("users/" + cleanEmail + "/name").setValue(username)
-            self.ref.child("gps_location/" + cleanEmail + "/location1").setValue(0)
+            let total_users = json!.count
+            if total_users < 10 {
+                self.ref.child("users/" + cleanEmail + "/id").setValue("00"+String(total_users))
+            } else if total_users < 100 {
+                self.ref.child("users/" + cleanEmail + "/id").setValue("0"+String(total_users))
+            } else {
+                self.ref.child("users/" + cleanEmail + "/id").setValue(String(total_users))
+            }
+            self.ref.child("gps_location/" + cleanEmail + "/latitude").setValue(0)
+            self.ref.child("gps_location/" + cleanEmail + "/longitude").setValue(0)
             self.ref.child("friends_list/" + cleanEmail + "/friend_count").setValue(0)
-            self.ref.child("user_interests/" + cleanEmail + "/interests").setValue(0)
+            self.ref.child("user_interests/" + cleanEmail + "/interests").setValue("yes")
         }
         
     }
@@ -232,8 +239,6 @@ class homePageViewController: UIViewController,CLLocationManagerDelegate {
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Create a new variable to store the instance of PlayerTableViewController
-        
         if let destination = segue.destination as? searchPageViewController {
             destination.thisUser = thisUser
         } else if let destination = segue.destination as? myProfileViewController {
