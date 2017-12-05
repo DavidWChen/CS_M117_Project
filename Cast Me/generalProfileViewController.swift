@@ -9,6 +9,7 @@
 import UIKit
 import Firebase
 
+
 class generalProfileViewController: UIViewController {
     
     var thisUser: GIDGoogleUser?
@@ -66,6 +67,15 @@ class generalProfileViewController: UIViewController {
         let longitude = json3!["longitude"] as! Double
         print("lat: "+String(latitude)+", long: "+String(longitude))
         userDistance.text = String(describing: latitude) + ", " + String(describing: longitude)
+        
+        
+        
+        /*let distance = Mycoordinate.distance(from: Mycoordinate)/1609
+        
+        let distanceString = String(distance)
+        let subtitle = first + distanceString + "mi"*/
+        
+        
         
         
         var user_interests = ""

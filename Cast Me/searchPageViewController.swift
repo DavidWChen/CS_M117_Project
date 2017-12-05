@@ -15,7 +15,7 @@ import UIKit
     
     var searchActive : Bool = false
     
-    var data = ["Martin Kong","Sid Bose","David Chen","Gary Smith"]
+    var data = ["Martin Kong","Sidd Bose","David Chen","Gary Smith"]
     var filtered:[String] = []
     
     var thisUser: GIDGoogleUser?
