@@ -8,6 +8,7 @@
 
 import UIKit
 import Firebase
+import CoreLocation
 
 
 class generalProfileViewController: UIViewController {
@@ -66,15 +67,17 @@ class generalProfileViewController: UIViewController {
         let latitude = json3!["latitude"] as! Double
         let longitude = json3!["longitude"] as! Double
         print("lat: "+String(latitude)+", long: "+String(longitude))
-        userDistance.text = String(describing: latitude) + ", " + String(describing: longitude)
+        var json0: [String: Any]?
+        json0 = readFirebase(urlstring: "gps_location/" + cleanEmail + ".json")
+        let userLat = json0!["latitude"] as! Double
+        let userLong = json3!["longitude"] as! Double
         
-        
-        
-        /*let distance = Mycoordinate.distance(from: Mycoordinate)/1609
-        
-        let distanceString = String(distance)
-        let subtitle = first + distanceString + "mi"*/
-        
+        let Mycoordinate = CLLocation(latitude: userLat, longitude: userLong)
+        let friendCoord = CLLocation(latitude: latitude, longitude: longitude)
+        let distance = friendCoord.distance(from: Mycoordinate)/1609
+        let distanceString = String(format: "%0.2f", distance)
+        let subtitle = distanceString + "mi"
+        userDistance.text = subtitle
         
         
         
