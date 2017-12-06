@@ -114,7 +114,7 @@ class myProfileViewController: UIViewController, UITableViewDelegate, UITableVie
         
         var json: [String: Any]?
         json = readFirebase(urlstring: "friends_list/"+plsemail+".json")
-        self.numfriends = json!["friend_count"] as! Int
+        self.numfriends = json!.count - 1 //["friend_count"] as! Int
         
         print(numfriends)
         return numfriends

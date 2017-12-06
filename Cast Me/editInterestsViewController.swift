@@ -71,7 +71,7 @@ class editInterestsViewController: UIViewController, UITextFieldDelegate, UITabl
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         // Hide the keyboard.
-        textField.resignFirstResponder()
+        //textField.resignFirstResponder()
         return true
     }
     

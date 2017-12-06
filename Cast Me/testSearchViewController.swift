@@ -19,8 +19,8 @@ class testSearchViewController: UIViewController {
    
     @IBAction func searchDatabase(_ sender: UIButton)
     {
-        let username: String = textFieldUsername.text
-      print(username)
+        //let username: String = textFieldUsername.text
+        //print(username)
     }
    
     /*@IBAction func searchDatabase(_ sender: UIButton)
