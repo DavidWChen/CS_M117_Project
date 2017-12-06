@@ -155,6 +155,14 @@
                                 <rect key="frame" x="20" y="118" width="334" height="454"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </mapView>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="XZI-8q-n1p">
+                                <rect key="frame" x="124" y="23" width="126" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Search for Friends"/>
+                                <connections>
+                                    <segue destination="1Ck-Jq-HVV" kind="presentation" id="yck-gY-5FE"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" red="1" green="0.70306479097108499" blue="0.6447784275540891" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                         <viewLayoutGuide key="safeArea" id="f3M-Fh-ic7"/>
@@ -487,13 +495,45 @@
                     <view key="view" contentMode="scaleToFill" id="Pca-KM-40d">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" text="Enter the username of your friend!" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="t4P-NY-j6c">
+                                <rect key="frame" x="67" y="20" width="240" height="128"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            </textView>
+                            <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="7Ny-0j-56V">
+                                <rect key="frame" x="139" y="69" width="97" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <nil key="textColor"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TGx-ZA-PeB">
+                                <rect key="frame" x="230" y="617" width="38" height="14"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Back "/>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZOn-z6-Bw0">
+                                <rect key="frame" x="161" y="118" width="52" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Search "/>
+                                <connections>
+                                    <action selector="searchDatabase:" destination="1Ck-Jq-HVV" eventType="touchUpInside" id="CwX-X7-cNO"/>
+                                </connections>
+                            </button>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <viewLayoutGuide key="safeArea" id="cND-Zh-acv"/>
                     </view>
+                    <connections>
+                        <outlet property="textFieldUsername" destination="7Ny-0j-56V" id="ezn-A4-z3N"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="7LH-A0-UOc" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1839" y="-629"/>
+            <point key="canvasLocation" x="1837.5999999999999" y="-629.2353823088456"/>
         </scene>
         <!--Search Page-->
         <scene sceneID="WH2-cq-Rrl">
@@ -645,11 +685,10 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="4g8-LA-SWk"/>
-        <segue reference="SC4-8n-4vs"/>
-        <segue reference="qGl-Ga-etm"/>
+        <segue reference="1fZ-tA-e3h"/>
+        <segue reference="dyX-rc-KCv"/>
         <segue reference="KNH-oR-wH5"/>
         <segue reference="jUb-d4-fzi"/>
-        <segue reference="UMO-xZ-cLU"/>
+        <segue reference="dOL-OI-QcC"/>
     </inferredMetricsTieBreakers>
 </document>

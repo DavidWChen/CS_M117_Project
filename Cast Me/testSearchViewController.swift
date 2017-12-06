@@ -7,11 +7,33 @@
 //
 
 import UIKit
+import Firebase
 
 class testSearchViewController: UIViewController {
+    
+    //text field for username
 
+   
+    @IBOutlet weak var textFieldUsername: UITextField!
+    
+   
+    @IBAction func searchDatabase(_ sender: UIButton)
+    {
+        let username: String = textFieldUsername.text
+      print(username)
+    }
+   
+    /*@IBAction func searchDatabase(_ sender: UIButton)
+    {
+        let username = textFieldUsername
+     
+    }*/
+   
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        //FIRApp.configure()
+        
 
         // Do any additional setup after loading the view.
     }
