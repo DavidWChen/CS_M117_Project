@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import CoreLocation
 
 class myProfileViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
@@ -17,6 +18,8 @@ class myProfileViewController: UIViewController, UITableViewDelegate, UITableVie
     
     var cleanEmail: String?
     var numfriends = -1
+    
+    var users = [String]()
     
     func readFirebase(urlstring: String) -> [String: Any] {
         var json: [String: Any]?
@@ -80,7 +83,16 @@ class myProfileViewController: UIViewController, UITableViewDelegate, UITableVie
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell : UserTableViewCell = tableView.dequeueReusableCell(withIdentifier: "UserTableViewCell", for: indexPath as IndexPath) as! UserTableViewCell
         
-        var new_friend_email = "hi"
+        cell.emailLabel.text = users[indexPath.row].replacingOccurrences(of: ",", with: ".")
+        
+        var json22: [String: Any]?
+        json22 = readFirebase(urlstring: "users/"+users[indexPath.row]+".json")
+        let namee = json22!["name"] as! String
+        cell.nameLabel.text = namee
+        
+        return cell
+        
+        /*var new_friend_email = "hi"
         
         let plsemail : String = cleanEmail!
         var friend_email = ""
@@ -100,7 +112,7 @@ class myProfileViewController: UIViewController, UITableViewDelegate, UITableVie
         cell.emailLabel.text = new_friend_email
         cell.nameLabel.text = name
         
-        return cell
+        return cell*/
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {
@@ -109,15 +121,42 @@ class myProfileViewController: UIViewController, UITableViewDelegate, UITableVie
     
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        users = [String]()
         
-        let plsemail : String = cleanEmail!
+        var json0: [String: Any]?
+        json0 = readFirebase(urlstring: "gps_location.json")
+        var json1 = json0![cleanEmail!] as? [String: Any]
+        let userLat = json1!["latitude"] as! Double
+        let userLong = json1!["longitude"] as! Double
+        
+        var json2 = readFirebase(urlstring: "users.json")
+        var numFriends = json2.count - 1
+        
+        let Mycoordinate = CLLocation(latitude: userLat, longitude: userLong)
+        
+        for person in json2 {
+            if person.key != cleanEmail {
+                var jsontemp = json0![person.key] as? [String: Any]
+                let lat1 = jsontemp!["latitude"] as! Double
+                let long1 = jsontemp!["longitude"] as! Double
+                
+                if CLLocation(latitude: lat1, longitude:long1).distance(from: Mycoordinate)/1609 <= 2.0 {
+                    users.append(person.key)
+                    print(person.key)
+                }
+            }
+        }
+        print("Nearby users: " + String(users.count))
+        return users.count
+        
+        /*let plsemail : String = cleanEmail!
         
         var json: [String: Any]?
         json = readFirebase(urlstring: "friends_list/"+plsemail+".json")
         self.numfriends = json!.count - 1 //["friend_count"] as! Int
         
         print(numfriends)
-        return numfriends
+        return numfriends*/
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -137,7 +176,8 @@ class myProfileViewController: UIViewController, UITableViewDelegate, UITableVie
             }
             let friendnum = indexPath.row
             print("sending friend # " + String(friendnum))
-            destination.friendnum = friendnum
+            //destination.friendnum = friendnum
+            destination.friend_email = users[indexPath.row]
         }
     }
 

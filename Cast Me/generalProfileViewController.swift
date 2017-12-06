@@ -15,7 +15,7 @@ class generalProfileViewController: UIViewController {
     
     var thisUser: GIDGoogleUser?
     var ref: FIRDatabaseReference?
-    var friendnum: Int?
+    //var friendnum: Int?
     var friend_email: String?
     @IBOutlet weak var usernameLabel: UILabel!
     @IBOutlet weak var userDistance: UILabel!
@@ -50,18 +50,18 @@ class generalProfileViewController: UIViewController {
         
         var json: [String: Any]?
         json = readFirebase(urlstring: "friends_list/" + cleanEmail + ".json")
-        print("This is friend # " + String(friendnum!))
-        let friendemail = json!["friend"+String(friendnum!)] as! String
-        friend_email = friendemail
+        //print("This is friend # " + String(friendnum!))
+        //let friendemail = json!["friend"+String(friendnum!)] as! String
+        //friend_email = friendemail
         
         var json2: [String: Any]?
-        json2 = readFirebase(urlstring: "users/" + friendemail + ".json")
-        print(friendemail)
+        json2 = readFirebase(urlstring: "users/" + friend_email! + ".json")
+        print(friend_email)
         print(json2)
         usernameLabel.text = (json2!["name"] as! String)
         
         var json3: [String: Any]?
-        json3 = readFirebase(urlstring: "gps_location/" + friendemail + ".json")
+        json3 = readFirebase(urlstring: "gps_location/" + friend_email! + ".json")
         print("getting coords now")
         print(json3!)
         let latitude = json3!["latitude"] as! Double
@@ -84,7 +84,7 @@ class generalProfileViewController: UIViewController {
         var user_interests = ""
         var num_interests = 0
         var json4 : [String: Any]?
-        json4 = readFirebase(urlstring: "user_interests/"+friendemail+".json")
+        json4 = readFirebase(urlstring: "user_interests/"+friend_email!+".json")
         if json4 != nil {
             num_interests = json4!.count - 1
         }
@@ -141,7 +141,7 @@ class generalProfileViewController: UIViewController {
             destination.channel_id = c_id
             destination.senderDisplayName = u1["name"] as! String
             print("sent channel " + c_id)
-            destination.friendnum = friendnum
+            //destination.friendnum = friendnum
             destination.friend_email = friend_email
         }
     }

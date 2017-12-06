@@ -17,7 +17,7 @@ class messageViewController: JSQMessagesViewController {
     var thisUser: GIDGoogleUser?
     var ref: FIRDatabaseReference?
     var channel_id: String?
-    var friendnum: Int?
+    //var friendnum: Int?
     var friend_email: String?
     
     
@@ -103,7 +103,7 @@ class messageViewController: JSQMessagesViewController {
         print("Button tapped")
         let svc = generalProfileViewController()
         svc.thisUser = thisUser
-        svc.friendnum = friendnum
+        //svc.friendnum = friendnum
         svc.friend_email = friend_email
         svc.modalTransitionStyle = .crossDissolve
         //present(svc, animated: true, completion: nil)
@@ -225,7 +225,7 @@ class messageViewController: JSQMessagesViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let destination = segue.destination as? generalProfileViewController {
             destination.thisUser = thisUser
-            destination.friendnum = friendnum
+            //destination.friendnum = friendnum
             destination.friend_email = friend_email
         }
     }
