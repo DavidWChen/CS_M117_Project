@@ -112,6 +112,8 @@ class generalProfileViewController: UIViewController {
             destination.thisUser = thisUser
         } else if let destination = segue.destination as? friendsListViewController {
             destination.thisUser = thisUser
+        } else if let destination = segue.destination as? homePageViewController {
+            destination.thisUser = thisUser
         } else if let destination = segue.destination as? messageViewController {
             let useremail = (thisUser?.profile.email)!
             let cleanEmail = useremail.replacingOccurrences(of: ".", with: ",")
