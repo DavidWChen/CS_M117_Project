@@ -648,11 +648,20 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3hc-bd-8T9">
+                                <rect key="frame" x="115" y="609" width="144" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Unfilter By Interests"/>
+                                <connections>
+                                    <action selector="filterClicked:" destination="hLb-2S-dpg" eventType="touchUpInside" id="UCL-h3-H1l"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" red="0.8275886512841002" green="1" blue="0.62441652007446158" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                         <viewLayoutGuide key="safeArea" id="SME-A7-HVe"/>
                     </view>
                     <connections>
+                        <outlet property="filterButton" destination="3hc-bd-8T9" id="FdG-J0-CBM"/>
                         <outlet property="friendsList" destination="Cal-Nu-ycF" id="CU8-Hh-Jwg"/>
                     </connections>
                 </viewController>
